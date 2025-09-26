@@ -11,7 +11,7 @@ const Header = () => {
       <div className="bg-foreground text-background py-2 px-4 hidden lg:block">
         <div className="max-w-7xl mx-auto flex justify-between items-center text-sm">
           <div className="flex items-center space-x-4">
-            <span className="text-xs xl:text-sm">To increase educational success for under-resourced students in Zimbabwe by restoring the conditions that make learning possible</span>
+            <span className="text-xs xl:text-sm">To increase educational success </span>
           </div>
           <div className="flex items-center space-x-4">
             <div className="hidden xl:flex items-center space-x-2">
