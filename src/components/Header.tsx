@@ -11,7 +11,7 @@ const Header = () => {
       <div className="bg-foreground text-background py-2 px-4 hidden lg:block">
         <div className="max-w-7xl mx-auto flex justify-between items-center text-sm">
           <div className="flex items-center space-x-4">
-            <span className="text-xs xl:text-sm">To increase educational success </span>
+            <span className="text-xs xl:text-sm"></span>
           </div>
           <div className="flex items-center space-x-4">
             <div className="hidden xl:flex items-center space-x-2">
@@ -40,9 +40,9 @@ const Header = () => {
           
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            <a href="#" className="text-foreground hover:text-primary transition-colors text-sm xl:text-base">Home</a>
+            <a href="#Hero" className="text-foreground hover:text-primary transition-colors text-sm xl:text-base">Home</a>
             <a href="#" className="text-foreground hover:text-primary transition-colors text-sm xl:text-base">About Us</a>
-            <a href="#" className="text-foreground hover:text-primary transition-colors text-sm xl:text-base">Our Impact</a>
+            <a href="#Impact" className="text-foreground hover:text-primary transition-colors text-sm xl:text-base">Our Impact</a>
             <a href="#" className="text-foreground hover:text-primary transition-colors text-sm xl:text-base">Contact Us</a>
             <Button variant="rounded" className="text-foreground text-sm border-foreground hover:border-foreground">
               DONATE NOW

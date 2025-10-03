@@ -3,7 +3,7 @@ import ImpactSectionContent from "./ImpactSectionContent";
 
 const ImpactSection = () => {
   return (
-    <ContentEditor sectionKey="impact_section" sectionName="Impact Section">
+    <ContentEditor id="impact" sectionKey="impact_section" sectionName="Impact Section">
       <ImpactSectionContent />
     </ContentEditor>
   );

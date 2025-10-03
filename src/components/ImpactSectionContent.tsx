@@ -11,7 +11,7 @@ const ImpactSectionContent = () => {
         {/* Header */}
         <div className="text-center mb-16 lg:mb-20">
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-foreground">
-            {content?.mainTitle || "Our"} <span className="text-primary">Impact</span>
+            { "Our"} <span className="text-primary">Impact</span>
           </h2>
           <div className="w-24 h-1 bg-primary mx-auto mb-6"></div>
           <p className="text-lg sm:text-xl text-foreground max-w-4xl mx-auto leading-relaxed">
@@ -45,7 +45,7 @@ const ImpactSectionContent = () => {
               </h3>
               <div className="bg-background/60 backdrop-blur-sm rounded-xl p-6 border border-border/50 shadow-lg">
                 <p className="text-base sm:text-lg text-foreground leading-relaxed">
-                  After working with students and educators around Harare for one year, the answer became clear: <span className="font-semibold text-primary">dignity, not just resources</span>, was the barrier no one was addressing.
+                  After working with students and educators around Harare for one year, the answer became clear: <span className="font-semibold text-primary">dignity, not just resources</span>, was the barrier no one was addressing. Hence the new dignity-first approach that Future Wings Foundation has taken.
                 </p>
               </div>
             </div>
