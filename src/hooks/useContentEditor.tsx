@@ -29,12 +29,18 @@ export const useContentEditor = (sectionKey: string) => {
         .single();
 
       if (error) {
-        console.error('Error fetching content:', error);
-        toast({
-          title: "Error",
-          description: "Failed to load content",
-          variant: "destructive"
-        });
+        // Only log/show error if it's not a "not found" error (PGRST116)
+        // Missing content is normal for new sections
+        if (error.code !== 'PGRST116') {
+          console.error('Error fetching content:', error);
+          toast({
+            title: "Error",
+            description: "Failed to load content",
+            variant: "destructive"
+          });
+        }
+        // Set empty content if no record exists - this is normal
+        setContent({});
       } else {
         setContent(data?.content || {});
       }
@@ -82,20 +88,33 @@ export const useContentEditor = (sectionKey: string) => {
     }
 
     setSaving(true);
-    const { error } = await supabase
+
+    // Try to update first, if it fails, try to insert
+    const { error: updateError } = await supabase
       .from('content_sections')
       .update({ content: newContent })
       .eq('section_key', sectionKey);
 
-    if (error) {
-      console.error('Error updating content:', error);
-      toast({
-        title: "Error",
-        description: "Failed to save changes",
-        variant: "destructive"
-      });
-      setSaving(false);
-      return false;
+    if (updateError) {
+      // If update fails (likely because record doesn't exist), try to insert
+      const { error: insertError } = await supabase
+        .from('content_sections')
+        .insert({
+          section_key: sectionKey,
+          section_name: sectionKey.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase()),
+          content: newContent
+        });
+
+      if (insertError) {
+        console.error('Error saving content:', insertError);
+        toast({
+          title: "Error",
+          description: "Failed to save changes",
+          variant: "destructive"
+        });
+        setSaving(false);
+        return false;
+      }
     }
 
     setContent(newContent);

@@ -1,9 +1,34 @@
 import { Button } from "@/components/ui/button";
 import { Phone, Mail, Facebook, Instagram, Linkedin, Menu, X } from "lucide-react";
 import { useState } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+
+  const scrollToSection = (sectionId: string) => {
+    setIsMobileMenuOpen(false);
+    
+    // If we're not on the home page, navigate first
+    if (location.pathname !== '/') {
+      window.location.href = `/#${sectionId}`;
+      return;
+    }
+
+    // Smooth scroll to section
+    const element = document.getElementById(sectionId);
+    if (element) {
+      const headerOffset = 80;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth"
+      });
+    }
+  };
 
   return (
     <header className="w-full">
@@ -34,19 +59,41 @@ const Header = () => {
       {/* Main navigation */}
       <nav className="bg-background shadow-sm py-3 sm:py-4 px-4 relative">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground">
+          <Link to="/" className="text-lg sm:text-xl lg:text-2xl font-bold text-foreground hover:text-primary transition-colors">
             Future Wings Foundation
-          </div>
+          </Link>
           
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-6 xl:space-x-8">
-            <a href="#Hero" className="text-foreground hover:text-primary transition-colors text-sm xl:text-base">Home</a>
-            <a href="#" className="text-foreground hover:text-primary transition-colors text-sm xl:text-base">About Us</a>
-            <a href="#Impact" className="text-foreground hover:text-primary transition-colors text-sm xl:text-base">Our Impact</a>
-            <a href="#" className="text-foreground hover:text-primary transition-colors text-sm xl:text-base">Contact Us</a>
-            <Button variant="rounded" className="text-foreground text-sm border-foreground hover:border-foreground">
-              DONATE NOW
-            </Button>
+            <button 
+              onClick={() => scrollToSection('hero')} 
+              className="text-foreground hover:text-primary transition-colors text-sm xl:text-base"
+            >
+              Home
+            </button>
+            <button 
+              onClick={() => scrollToSection('about')} 
+              className="text-foreground hover:text-primary transition-colors text-sm xl:text-base"
+            >
+              About Us
+            </button>
+            <button 
+              onClick={() => scrollToSection('impact')} 
+              className="text-foreground hover:text-primary transition-colors text-sm xl:text-base"
+            >
+              Our Impact
+            </button>
+            <button 
+              onClick={() => scrollToSection('contact')} 
+              className="text-foreground hover:text-primary transition-colors text-sm xl:text-base"
+            >
+              Contact Us
+            </button>
+            <Link to="/donate">
+              <Button variant="rounded" className="text-foreground text-sm border-foreground hover:border-foreground">
+                DONATE NOW
+              </Button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -63,13 +110,35 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="lg:hidden absolute top-full left-0 right-0 bg-background shadow-lg border-t z-50">
             <div className="px-4 py-6 space-y-6 text-center">
-              <a href="#" className="block text-foreground hover:text-primary transition-colors py-2 text-lg">Home</a>
-              <a href="#" className="block text-foreground hover:text-primary transition-colors py-2 text-lg">About Us</a>
-              <a href="#" className="block text-foreground hover:text-primary transition-colors py-2 text-lg">Our Impact</a>
-              <a href="#" className="block text-foreground hover:text-primary transition-colors py-2 text-lg">Contact Us</a>
-              <Button variant="rounded" className="text-foreground mt-4 px-8">
-                DONATE NOW
-              </Button>
+              <button 
+                onClick={() => scrollToSection('hero')} 
+                className="block w-full text-foreground hover:text-primary transition-colors py-2 text-lg"
+              >
+                Home
+              </button>
+              <button 
+                onClick={() => scrollToSection('about')} 
+                className="block w-full text-foreground hover:text-primary transition-colors py-2 text-lg"
+              >
+                About Us
+              </button>
+              <button 
+                onClick={() => scrollToSection('impact')} 
+                className="block w-full text-foreground hover:text-primary transition-colors py-2 text-lg"
+              >
+                Our Impact
+              </button>
+              <button 
+                onClick={() => scrollToSection('contact')} 
+                className="block w-full text-foreground hover:text-primary transition-colors py-2 text-lg"
+              >
+                Contact Us
+              </button>
+              <Link to="/donate" className="block">
+                <Button variant="rounded" className="text-foreground mt-4 px-8 w-full">
+                  DONATE NOW
+                </Button>
+              </Link>
               
               {/* Mobile Social Links */}
               <div className="flex items-center justify-center space-x-4 pt-4 border-t">

@@ -13,11 +13,21 @@ const Index = () => {
       <AdminControls />
       <EditingIndicator />
       <Header />
-      <Hero />
-      <ChangeSection />
-      <ImpactSection />
-      <TeamSection />
-      <Footer />
+      <div id="hero">
+        <Hero />
+      </div>
+      <div id="about">
+        <ChangeSection />
+      </div>
+      <div id="impact">
+        <ImpactSection />
+      </div>
+      <div id="team">
+        <TeamSection />
+      </div>
+      <div id="contact">
+        <Footer />
+      </div>
     </div>
   );
 };

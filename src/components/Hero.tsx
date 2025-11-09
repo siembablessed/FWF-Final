@@ -6,6 +6,7 @@ import classroomImage from "@/assets/classroom-scene.jpg";
 import educationImage from "@/assets/hero-education.jpg";
 import ContentEditor from "@/components/ContentEditor";
 import { useContentEditor } from "@/hooks/useContentEditor";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -88,13 +89,15 @@ const Hero = () => {
                 __html: highlightKeywords(slides[currentSlide].title),
               }}
             />
-            <Button
-              variant="rounded"
-              size="lg"
-              className="text-background px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-lg font-semibold"
-            >
-              {content?.buttonText || "DONATE NOW"}
-            </Button>
+            <Link to="/donate">
+              <Button
+                variant="rounded"
+                size="lg"
+                className="text-background px-6 sm:px-8 py-2 sm:py-3 text-sm sm:text-lg font-semibold"
+              >
+                {content?.buttonText || "DONATE NOW"}
+              </Button>
+            </Link>
           </div>
         </div>
 
