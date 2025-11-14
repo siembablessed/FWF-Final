@@ -187,7 +187,7 @@ const ImpactSectionContent = () => {
                   </div>
                   <h4 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">Dignity Spaces</h4>
                   <p className="text-sm text-foreground/70 leading-relaxed">
-                    We repair, renovate, and revitalise school infrastructure to create safe, functional, and welcoming environments that inspire learning.
+                    We repair, renovate, and rehabilitate school infrastructure to create safe, functional, and welcoming environments that inspire learning.
                   </p>
                 </div>
               </div>

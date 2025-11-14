@@ -10,11 +10,12 @@ import Simba from "@/assets/Simba.jpg";
 import Prudence from "@/assets/Prudence.jpg";
 import Lindisi from "@/assets/Lindisi.jpg";
 import Tapiwa from "@/assets/Yvette.jpg";
+import Rose from "@/assets/Rose.jpg";
 // Board Members
 import Zinzile from "@/assets/Zinzile Mlambo.jpeg";
 import Leroy from "@/assets/Leroy Margolis.jpeg";
 import Nicole from "@/assets/Nicole Gwindi.jpeg";
-import Jafter from "@/assets/Jafter_Orien_Francis.jpeg";
+import Francis from "@/assets/Francis.jpg";
 import Kiaran from "@/assets/Kiaran_Knight.jpeg";
 import Tafadzwa from "@/assets/Tafadzwa Munatsi.jpeg";
 
@@ -49,28 +50,35 @@ const TeamSection = () => {
   }, []);
 
   const teamMembers = [
-    { name: "Alisa Adams", role: "Founder", type: "leadership", category: "team", image: Alisa },
+    // Alisa Adams removed from here, moved to boardMembers
     { name: "Alison Hama", role: "Strategic Partnerships Lead", type: "staff", category: "team", image: Alison },
     { name: "Lindisi Doba", role: "Community Engagement Officer", type: "staff", category: "team", image: Lindisi },
     { name: "Prudence Jingura", role: "Social Media & Marketing Intern", type: "staff", category: "team", image: Prudence },
     { name: "Simbarashe Mahlaulo", role: "Operations & Logistics", type: "staff", category: "team", image: Simba },
     { name: "Tapiwa Yvette Chikwanha", role: "People Manager", type: "staff", category: "team", image: Tapiwa },
-    { name: "Fadzai Chigoma", role: "- -", type: "staff", category: "team", image: Fadzi },
+    { name: "Fadzai Chigoma", role: "Executive Assistant", type: "staff", category: "team", image: Fadzi },
     { name: "Thandolwenkosi Sibanda", role: "Monitoring & Evaluation Officer", type: "staff", category: "team", image: Thando },
-    { name: "Vanessa Kambasha", role: "Program Manager", type: "staff", category: "team" },
+    { name: "Rose Arimoso", role: "Finance Officer", type: "staff", category: "team", image: Rose },
   ];
 
   const boardMembers = [
+    // 1. Alisa Adams (Co-founder) - NEW PRIMARY MEMBER
+    { name: "Alisa Adams", role: "Co-Founder & Board Director", type: "leadership", category: "board", image: Alisa },
+    // 2. Nicole Gwindi - Moved to second position
+    { name: "Nicole Gwindi", role: "Board Member", type: "board", category: "board", image: Nicole },
+    // 3. Francis Rwodzi / Jafter - Updated name and moved to third position
+    { name: "Francis Rwodzi", role: "Board Member", type: "board", category: "board", image: Francis },
+    // Remaining members follow
     { name: "Zinzile Mlambo", role: "Board Member", type: "board", category: "board", image: Zinzile },
     { name: "Leroy Margolis", role: "Board Member", type: "board", category: "board", image: Leroy },
-    { name: "Jafter Orien Francis", role: "Board Member", type: "board", category: "board", image: Jafter },
     { name: "Tafadzwa Munatsi", role: "Board Member", type: "board", category: "board", image: Tafadzwa },
-    { name: "Nicole Gwindi", role: "Board Member", type: "board", category: "board", image: Nicole },
     { name: "Kiaran Knight", role: "Board Member", type: "board", category: "board", image: Kiaran },
   ];
 
+  // Determine which members to display
   const displayedTeamMembers = showAllTeam ? teamMembers : teamMembers.slice(0, 6);
-  const displayedBoardMembers = showAllBoard ? boardMembers : boardMembers.slice(0, 3);
+  // Reverted to slice(0, 3) to show only 3 by default
+  const displayedBoardMembers = showAllBoard ? boardMembers : boardMembers.slice(0, 3); 
 
   const handleToggleTeam = () => {
     if (showAllTeam) {
@@ -162,43 +170,8 @@ const TeamSection = () => {
             </p>
           </div>
 
-          {/* Team Members Section */}
-          <div className="mb-16">
-            <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">
-              Our Team
-            </h3>
-            <div className="grid gap-8 mb-8 sm:mb-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              <AnimatePresence>
-                {displayedTeamMembers.map((member, index) => (
-                  <MemberCard key={member.name} member={member} index={index} />
-                ))}
-              </AnimatePresence>
-            </div>
-
-            {teamMembers.length > 6 && (
-              <div className="flex flex-col items-center gap-4">
-                <Button
-                  onClick={handleToggleTeam}
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 px-6 py-2 rounded-full font-medium shadow-md"
-                >
-                  {showAllTeam ? (
-                    <>Show Less Team Members</>
-                  ) : (
-                    <>View All Team Members</>
-                  )}
-                </Button>
-
-                {!showAllTeam && (
-                  <p className="text-sm text-foreground/70">
-                    Showing {displayedTeamMembers.length} of {teamMembers.length} team members
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* Board Members Section - Highlighted */}
-          <div className="relative">
+          {/* BOARD MEMBERS SECTION - MOVED TO THE TOP */}
+          <div className="relative mb-16">
             {/* Decorative background for board section */}
             <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-accent/10 to-primary/5 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8"></div>
             <div className="absolute inset-0 border-2 border-accent/20 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8"></div>
@@ -241,8 +214,8 @@ const TeamSection = () => {
                           )}
                         </div>
                         <div className="absolute top-4 right-4">
-                          <div className="px-3 py-1 rounded-full text-xs font-medium bg-accent/90 text-accent-foreground shadow-md">
-                            Board
+                          <div className={`px-3 py-1 rounded-full text-xs font-medium shadow-md ${member.type === "leadership" ? "bg-primary/90 text-primary-foreground" : "bg-accent/90 text-accent-foreground"}`}>
+                            {member.type === "leadership" ? "Leadership" : "Board"}
                           </div>
                         </div>
                       </div>
@@ -283,14 +256,42 @@ const TeamSection = () => {
                     )}
                   </Button>
 
-                  {!showAllBoard && (
-                    <p className="text-sm text-foreground/70">
-                      Showing {displayedBoardMembers.length} of {boardMembers.length} board members
-                    </p>
-                  )}
+                  {/* REMOVED: Count display paragraph */}
                 </div>
               )}
             </div>
+          </div>
+
+
+          {/* TEAM MEMBERS SECTION - MOVED TO THE BOTTOM */}
+          <div className="mb-16">
+            <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">
+              Our Team
+            </h3>
+            <div className="grid gap-8 mb-8 sm:mb-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              <AnimatePresence>
+                {displayedTeamMembers.map((member, index) => (
+                  <MemberCard key={member.name} member={member} index={index} />
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {teamMembers.length > 6 && (
+              <div className="flex flex-col items-center gap-4">
+                <Button
+                  onClick={handleToggleTeam}
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 px-6 py-2 rounded-full font-medium shadow-md"
+                >
+                  {showAllTeam ? (
+                    <>Show Less Team Members</>
+                  ) : (
+                    <>View All Team Members</>
+                  )}
+                </Button>
+
+                {/* REMOVED: Count display paragraph */}
+              </div>
+            )}
           </div>
         </div>
       </section>
