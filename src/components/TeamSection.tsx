@@ -50,7 +50,8 @@ const TeamSection = () => {
   }, []);
 
   const teamMembers = [
-    // Alisa Adams removed from here, moved to boardMembers
+    // Added Alisa Adams here as well (Leadership)
+    { name: "Alisa Adams", role: "Co-Founder & Executive Director", type: "leadership", category: "team", image: Alisa },
     { name: "Alison Hama", role: "Strategic Partnerships Lead", type: "staff", category: "team", image: Alison },
     { name: "Lindisi Doba", role: "Community Engagement Officer", type: "staff", category: "team", image: Lindisi },
     { name: "Prudence Jingura", role: "Social Media & Marketing Intern", type: "staff", category: "team", image: Prudence },
@@ -62,13 +63,10 @@ const TeamSection = () => {
   ];
 
   const boardMembers = [
-    // 1. Alisa Adams (Co-founder) - NEW PRIMARY MEMBER
+    // Alisa Adams is also here as Board Director
     { name: "Alisa Adams", role: "Co-Founder & Board Director", type: "leadership", category: "board", image: Alisa },
-    // 2. Nicole Gwindi - Moved to second position
     { name: "Nicole Gwindi", role: "Board Member", type: "board", category: "board", image: Nicole },
-    // 3. Francis Rwodzi / Jafter - Updated name and moved to third position
     { name: "Francis Rwodzi", role: "Board Member", type: "board", category: "board", image: Francis },
-    // Remaining members follow
     { name: "Zinzile Mlambo", role: "Board Member", type: "board", category: "board", image: Zinzile },
     { name: "Leroy Margolis", role: "Board Member", type: "board", category: "board", image: Leroy },
     { name: "Tafadzwa Munatsi", role: "Board Member", type: "board", category: "board", image: Tafadzwa },
@@ -77,7 +75,6 @@ const TeamSection = () => {
 
   // Determine which members to display
   const displayedTeamMembers = showAllTeam ? teamMembers : teamMembers.slice(0, 6);
-  // Reverted to slice(0, 3) to show only 3 by default
   const displayedBoardMembers = showAllBoard ? boardMembers : boardMembers.slice(0, 3); 
 
   const handleToggleTeam = () => {
@@ -96,7 +93,7 @@ const TeamSection = () => {
 
   const MemberCard = ({ member, index }: { member: any; index: number }) => (
     <motion.div
-      key={member.name}
+      key={`${member.name}-${member.category}`}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 30 }}
@@ -170,14 +167,12 @@ const TeamSection = () => {
             </p>
           </div>
 
-          {/* BOARD MEMBERS SECTION - MOVED TO THE TOP */}
+          {/* BOARD MEMBERS SECTION */}
           <div className="relative mb-16">
-            {/* Decorative background for board section */}
             <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-accent/10 to-primary/5 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8"></div>
             <div className="absolute inset-0 border-2 border-accent/20 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8"></div>
 
             <div className="relative pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
-              {/* Section Header */}
               <div className="mb-6 sm:mb-8">
                 <h3 className="text-2xl sm:text-3xl font-bold text-foreground">
                   Board of Directors
@@ -187,12 +182,11 @@ const TeamSection = () => {
                 </p>
               </div>
 
-              {/* Board Members Grid */}
               <div className="grid gap-8 mb-8 sm:mb-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 <AnimatePresence>
                   {displayedBoardMembers.map((member, index) => (
                     <motion.div
-                      key={member.name}
+                      key={`${member.name}-board`}
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 30 }}
@@ -255,15 +249,13 @@ const TeamSection = () => {
                       <>View All Board Members</>
                     )}
                   </Button>
-
-                  {/* REMOVED: Count display paragraph */}
                 </div>
               )}
             </div>
           </div>
 
 
-          {/* TEAM MEMBERS SECTION - MOVED TO THE BOTTOM */}
+          {/* TEAM MEMBERS SECTION */}
           <div className="mb-16">
             <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">
               Our Team
@@ -271,7 +263,7 @@ const TeamSection = () => {
             <div className="grid gap-8 mb-8 sm:mb-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <AnimatePresence>
                 {displayedTeamMembers.map((member, index) => (
-                  <MemberCard key={member.name} member={member} index={index} />
+                  <MemberCard key={`${member.name}-team`} member={member} index={index} />
                 ))}
               </AnimatePresence>
             </div>
@@ -288,8 +280,6 @@ const TeamSection = () => {
                     <>View All Team Members</>
                   )}
                 </Button>
-
-                {/* REMOVED: Count display paragraph */}
               </div>
             )}
           </div>

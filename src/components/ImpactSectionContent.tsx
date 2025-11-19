@@ -97,7 +97,7 @@ const ImpactSectionContent = () => {
         </div>
 
         {/* What We Have Learnt - Full Width */}
-        <div className="mb-12 lg:mb-16">
+        <div className="mb-16 lg:mb-20">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-start gap-4 mb-6">
               <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -117,43 +117,8 @@ const ImpactSectionContent = () => {
           </div>
         </div>
 
-        {/* Our Reach So Far - Full Width (Last) */}
+        {/* Three Pillars - MOVED UP */}
         <div className="mb-16 lg:mb-20">
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-gradient-to-br from-primary to-primary/90 rounded-2xl p-8 sm:p-12 text-background shadow-xl">
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-background/20 rounded-full mb-4">
-                  <Award className="w-8 h-8" />
-                </div>
-                <h3 className="text-2xl sm:text-3xl font-bold mb-2">
-                  Our Reach So Far
-                </h3>
-                <div className="w-16 h-0.5 bg-background/60 mx-auto"></div>
-              </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-                <div className="text-center">
-                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.studentsSupported || "718"}</div>
-                  <div className="text-sm sm:text-base opacity-90">Students directly supported in 2025</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.sanitaryPads || "5,500+"}</div>
-                  <div className="text-sm sm:text-base opacity-90">Sanitary pads distributed</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.winterJerseys || "40+"}</div>
-                  <div className="text-sm sm:text-base opacity-90">Winter jerseys provided</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.schoolsRenovated || "1"}</div>
-                  <div className="text-sm sm:text-base opacity-90">School renovated</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Three Pillars - Centered with reduced width */}
-        <div className="mb-16">
           <div className="text-center mb-12">
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-foreground">
               What We're Doing <span className="text-primary">Now</span>
@@ -208,6 +173,41 @@ const ImpactSectionContent = () => {
           </div>
         </div>
 
+        {/* Our Reach So Far - MOVED DOWN (After Pillars) */}
+        <div className="mb-16 lg:mb-20">
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-gradient-to-br from-primary to-primary/90 rounded-2xl p-8 sm:p-12 text-background shadow-xl">
+              <div className="text-center mb-10">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-background/20 rounded-full mb-4">
+                  <Award className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2">
+                  Our Reach So Far
+                </h3>
+                <div className="w-16 h-0.5 bg-background/60 mx-auto"></div>
+              </div>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.studentsSupported || "718"}</div>
+                  <div className="text-sm sm:text-base opacity-90">Students directly supported in 2025</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.sanitaryPads || "5,500+"}</div>
+                  <div className="text-sm sm:text-base opacity-90">Sanitary pads distributed</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.winterJerseys || "40+"}</div>
+                  <div className="text-sm sm:text-base opacity-90">Winter jerseys provided</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.schoolsRenovated || "1"}</div>
+                  <div className="text-sm sm:text-base opacity-90">School renovated</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Call to Action */}
         <div className="text-center">
           <div className="max-w-2xl mx-auto p-8 sm:p-10 border border-border rounded-2xl bg-background">
@@ -230,7 +230,7 @@ const ImpactSectionContent = () => {
         </div>
       </div>
 
-      {/* Contact Form Dialog - Simplified */}
+      {/* Contact Form Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>

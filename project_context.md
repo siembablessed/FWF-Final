@@ -113,6 +113,7 @@ This file contains the directory structure and the contents of important project
 │   │   ├── **migrations/**
 │   │   │   ├── 20250913053826_6f09caa2-7bd5-404e-a2c7-32d2f69401a7.sql
 │   │   │   ├── 20250915081649_6276068f-3ce8-4061-9e1b-a97ae65129fe.sql
+│   │   │   ├── 20251114092512_seed_initial_roles.sql
 
 ---
 
@@ -122,10 +123,9 @@ This file contains the directory structure and the contents of important project
 ### File: `.env`
 
 ```text
-VITE_SUPABASE_PROJECT_ID="mfrzfsflerjronybctft"
-VITE_SUPABASE_PUBLISHABLE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1mcnpmc2ZsZXJqcm9ueWJjdGZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3NDA4MjQsImV4cCI6MjA3MzMxNjgyNH0.LXECcx2UhQXqpnQfgZppNU9dPONpuUvST2yZCCz_bcA"
-VITE_SUPABASE_URL="https://mfrzfsflerjronybctft.supabase.co"
-
+VITE_SUPABASE_PROJECT_ID="llvgrketqgxonwxxylpr"
+VITE_SUPABASE_PUBLISHABLE_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxsdmdya2V0cWd4b253eHh5bHByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxMTk5ODgsImV4cCI6MjA3ODY5NTk4OH0.ycRXAbEjqGa77OCrNZjuUGLYobtDzV8p-zpdT0jbx_Y"
+VITE_SUPABASE_URL="https://llvgrketqgxonwxxylpr.supabase.co"
 ```
 
 ### File: `.gitignore`
@@ -331,6 +331,7 @@ export default tseslint.config(
         "globals": "^15.15.0",
         "lovable-tagger": "^1.1.9",
         "postcss": "^8.5.6",
+        "supabase": "^2.58.5",
         "tailwindcss": "^3.4.17",
         "typescript": "^5.8.3",
         "typescript-eslint": "^8.38.0",
@@ -733,7 +734,7 @@ export default tseslint.config(
     },
     "node_modules/@esbuild/openbsd-arm64": {
       "version": "0.25.0",
-      "resolved": "https://registry.npmjs.org/@esbuild/openbsd-arm6
+      "resolved": "https://registry.
 
 ... [Content truncated at 15000 characters] ...
 ```
@@ -820,6 +821,7 @@ export default tseslint.config(
     "globals": "^15.15.0",
     "lovable-tagger": "^1.1.9",
     "postcss": "^8.5.6",
+    "supabase": "^2.58.5",
     "tailwindcss": "^3.4.17",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.38.0",
@@ -2526,7 +2528,7 @@ const ImpactSectionContent = () => {
                   </div>
                   <h4 className="text-xl font-bold mb-3 text-foreground group-hover:text-primary transition-colors">Dignity Spaces</h4>
                   <p className="text-sm text-foreground/70 leading-relaxed">
-                    We repair, renovate, and revitalise school infrastructure to create safe, functional, and welcoming environments that inspire learning.
+                    We repair, renovate, and rehabilitate school infrastructure to create safe, functional, and welcoming environments that inspire learning.
                   </p>
                 </div>
               </div>
@@ -2661,11 +2663,12 @@ import Simba from "@/assets/Simba.jpg";
 import Prudence from "@/assets/Prudence.jpg";
 import Lindisi from "@/assets/Lindisi.jpg";
 import Tapiwa from "@/assets/Yvette.jpg";
+import Rose from "@/assets/Rose.jpg";
 // Board Members
 import Zinzile from "@/assets/Zinzile Mlambo.jpeg";
 import Leroy from "@/assets/Leroy Margolis.jpeg";
 import Nicole from "@/assets/Nicole Gwindi.jpeg";
-import Jafter from "@/assets/Jafter_Orien_Francis.jpeg";
+import Francis from "@/assets/Francis.jpg";
 import Kiaran from "@/assets/Kiaran_Knight.jpeg";
 import Tafadzwa from "@/assets/Tafadzwa Munatsi.jpeg";
 
@@ -2700,28 +2703,35 @@ const TeamSection = () => {
   }, []);
 
   const teamMembers = [
-    { name: "Alisa Adams", role: "Founder", type: "leadership", category: "team", image: Alisa },
+    // Alisa Adams removed from here, moved to boardMembers
     { name: "Alison Hama", role: "Strategic Partnerships Lead", type: "staff", category: "team", image: Alison },
     { name: "Lindisi Doba", role: "Community Engagement Officer", type: "staff", category: "team", image: Lindisi },
     { name: "Prudence Jingura", role: "Social Media & Marketing Intern", type: "staff", category: "team", image: Prudence },
     { name: "Simbarashe Mahlaulo", role: "Operations & Logistics", type: "staff", category: "team", image: Simba },
     { name: "Tapiwa Yvette Chikwanha", role: "People Manager", type: "staff", category: "team", image: Tapiwa },
-    { name: "Fadzai Chigoma", role: "- -", type: "staff", category: "team", image: Fadzi },
+    { name: "Fadzai Chigoma", role: "Executive Assistant", type: "staff", category: "team", image: Fadzi },
     { name: "Thandolwenkosi Sibanda", role: "Monitoring & Evaluation Officer", type: "staff", category: "team", image: Thando },
-    { name: "Vanessa Kambasha", role: "Program Manager", type: "staff", category: "team" },
+    { name: "Rose Arimoso", role: "Finance Officer", type: "staff", category: "team", image: Rose },
   ];
 
   const boardMembers = [
+    // 1. Alisa Adams (Co-founder) - NEW PRIMARY MEMBER
+    { name: "Alisa Adams", role: "Co-Founder & Board Director", type: "leadership", category: "board", image: Alisa },
+    // 2. Nicole Gwindi - Moved to second position
+    { name: "Nicole Gwindi", role: "Board Member", type: "board", category: "board", image: Nicole },
+    // 3. Francis Rwodzi / Jafter - Updated name and moved to third position
+    { name: "Francis Rwodzi", role: "Board Member", type: "board", category: "board", image: Francis },
+    // Remaining members follow
     { name: "Zinzile Mlambo", role: "Board Member", type: "board", category: "board", image: Zinzile },
     { name: "Leroy Margolis", role: "Board Member", type: "board", category: "board", image: Leroy },
-    { name: "Jafter Orien Francis", role: "Board Member", type: "board", category: "board", image: Jafter },
     { name: "Tafadzwa Munatsi", role: "Board Member", type: "board", category: "board", image: Tafadzwa },
-    { name: "Nicole Gwindi", role: "Board Member", type: "board", category: "board", image: Nicole },
     { name: "Kiaran Knight", role: "Board Member", type: "board", category: "board", image: Kiaran },
   ];
 
+  // Determine which members to display
   const displayedTeamMembers = showAllTeam ? teamMembers : teamMembers.slice(0, 6);
-  const displayedBoardMembers = showAllBoard ? boardMembers : boardMembers.slice(0, 3);
+  // Reverted to slice(0, 3) to show only 3 by default
+  const displayedBoardMembers = showAllBoard ? boardMembers : boardMembers.slice(0, 3); 
 
   const handleToggleTeam = () => {
     if (showAllTeam) {
@@ -2813,43 +2823,8 @@ const TeamSection = () => {
             </p>
           </div>
 
-          {/* Team Members Section */}
-          <div className="mb-16">
-            <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">
-              Our Team
-            </h3>
-            <div className="grid gap-8 mb-8 sm:mb-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-              <AnimatePresence>
-                {displayedTeamMembers.map((member, index) => (
-                  <MemberCard key={member.name} member={member} index={index} />
-                ))}
-              </AnimatePresence>
-            </div>
-
-            {teamMembers.length > 6 && (
-              <div className="flex flex-col items-center gap-4">
-                <Button
-                  onClick={handleToggleTeam}
-                  className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 px-6 py-2 rounded-full font-medium shadow-md"
-                >
-                  {showAllTeam ? (
-                    <>Show Less Team Members</>
-                  ) : (
-                    <>View All Team Members</>
-                  )}
-                </Button>
-
-                {!showAllTeam && (
-                  <p className="text-sm text-foreground/70">
-                    Showing {displayedTeamMembers.length} of {teamMembers.length} team members
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-
-          {/* Board Members Section - Highlighted */}
-          <div className="relative">
+          {/* BOARD MEMBERS SECTION - MOVED TO THE TOP */}
+          <div className="relative mb-16">
             {/* Decorative background for board section */}
             <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-accent/10 to-primary/5 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8"></div>
             <div className="absolute inset-0 border-2 border-accent/20 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8"></div>
@@ -2892,8 +2867,8 @@ const TeamSection = () => {
                           )}
                         </div>
                         <div className="absolute top-4 right-4">
-                          <div className="px-3 py-1 rounded-full text-xs font-medium bg-accent/90 text-accent-foreground shadow-md">
-                            Board
+                          <div className={`px-3 py-1 rounded-full text-xs font-medium shadow-md ${member.type === "leadership" ? "bg-primary/90 text-primary-foreground" : "bg-accent/90 text-accent-foreground"}`}>
+                            {member.type === "leadership" ? "Leadership" : "Board"}
                           </div>
                         </div>
                       </div>
@@ -2934,14 +2909,42 @@ const TeamSection = () => {
                     )}
                   </Button>
 
-                  {!showAllBoard && (
-                    <p className="text-sm text-foreground/70">
-                      Showing {displayedBoardMembers.length} of {boardMembers.length} board members
-                    </p>
-                  )}
+                  {/* REMOVED: Count display paragraph */}
                 </div>
               )}
             </div>
+          </div>
+
+
+          {/* TEAM MEMBERS SECTION - MOVED TO THE BOTTOM */}
+          <div className="mb-16">
+            <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">
+              Our Team
+            </h3>
+            <div className="grid gap-8 mb-8 sm:mb-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+              <AnimatePresence>
+                {displayedTeamMembers.map((member, index) => (
+                  <MemberCard key={member.name} member={member} index={index} />
+                ))}
+              </AnimatePresence>
+            </div>
+
+            {teamMembers.length > 6 && (
+              <div className="flex flex-col items-center gap-4">
+                <Button
+                  onClick={handleToggleTeam}
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 px-6 py-2 rounded-full font-medium shadow-md"
+                >
+                  {showAllTeam ? (
+                    <>Show Less Team Members</>
+                  ) : (
+                    <>View All Team Members</>
+                  )}
+                </Button>
+
+                {/* REMOVED: Count display paragraph */}
+              </div>
+            )}
           </div>
         </div>
       </section>
@@ -2950,7 +2953,6 @@ const TeamSection = () => {
 };
 
 export default TeamSection;
-
 ```
 
 ### File: `src\components\ui\accordion.tsx`
@@ -8234,8 +8236,8 @@ export const useContentEditor = (sectionKey: string) => {
 import { createClient } from '@supabase/supabase-js';
 import type { Database } from './types';
 
-const SUPABASE_URL = "https://mfrzfsflerjronybctft.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1mcnpmc2ZsZXJqcm9ueWJjdGZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTc3NDA4MjQsImV4cCI6MjA3MzMxNjgyNH0.LXECcx2UhQXqpnQfgZppNU9dPONpuUvST2yZCCz_bcA";
+const SUPABASE_URL = "https://llvgrketqgxonwxxylpr.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imxsdmdya2V0cWd4b253eHh5bHByIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMxMTk5ODgsImV4cCI6MjA3ODY5NTk4OH0.ycRXAbEjqGa77OCrNZjuUGLYobtDzV8p-zpdT0jbx_Y";
 
 // Import the supabase client like this:
 // import { supabase } from "@/integrations/supabase/client";
@@ -8252,215 +8254,7 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
 ### File: `src\integrations\supabase\types.ts`
 
 ```ts
-export type Json =
-  | string
-  | number
-  | boolean
-  | null
-  | { [key: string]: Json | undefined }
-  | Json[]
-
-export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "13.0.5"
-  }
-  public: {
-    Tables: {
-      content_sections: {
-        Row: {
-          content: Json
-          created_at: string
-          id: string
-          section_key: string
-          section_name: string
-          updated_at: string
-        }
-        Insert: {
-          content?: Json
-          created_at?: string
-          id?: string
-          section_key: string
-          section_name: string
-          updated_at?: string
-        }
-        Update: {
-          content?: Json
-          created_at?: string
-          id?: string
-          section_key?: string
-          section_name?: string
-          updated_at?: string
-        }
-        Relationships: []
-      }
-      profiles: {
-        Row: {
-          created_at: string
-          email: string
-          id: string
-          role: string
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          created_at?: string
-          email: string
-          id?: string
-          role?: string
-          updated_at?: string
-          user_id: string
-        }
-        Update: {
-          created_at?: string
-          email?: string
-          id?: string
-          role?: string
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: []
-      }
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      [_ in never]: never
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
-
-type DatabaseWithoutInternals = Omit<Database, "__InternalSupabase">
-
-type DefaultSchema = DatabaseWithoutInternals[Extract<keyof Database, "public">]
-
-export type Tables<
-  DefaultSchemaTableNameOrOptions extends
-    | keyof (DefaultSchema["Tables"] & DefaultSchema["Views"])
-    | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
-  }
-    ? keyof (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-        DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])
-    : never = never,
-> = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
-}
-  ? (DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"] &
-      DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
-    }
-    ? R
-    : never
-  : DefaultSchemaTableNameOrOptions extends keyof (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])
-    ? (DefaultSchema["Tables"] &
-        DefaultSchema["Views"])[DefaultSchemaTableNameOrOptions] extends {
-        Row: infer R
-      }
-      ? R
-      : never
-    : never
-
-export type TablesInsert<
-  DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
-  }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
-> = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
-}
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
-    }
-    ? I
-    : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Insert: infer I
-      }
-      ? I
-      : never
-    : never
-
-export type TablesUpdate<
-  DefaultSchemaTableNameOrOptions extends
-    | keyof DefaultSchema["Tables"]
-    | { schema: keyof DatabaseWithoutInternals },
-  TableName extends DefaultSchemaTableNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
-  }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"]
-    : never = never,
-> = DefaultSchemaTableNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
-}
-  ? DatabaseWithoutInternals[DefaultSchemaTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
-    }
-    ? U
-    : never
-  : DefaultSchemaTableNameOrOptions extends keyof DefaultSchema["Tables"]
-    ? DefaultSchema["Tables"][DefaultSchemaTableNameOrOptions] extends {
-        Update: infer U
-      }
-      ? U
-      : never
-    : never
-
-export type Enums<
-  DefaultSchemaEnumNameOrOptions extends
-    | keyof DefaultSchema["Enums"]
-    | { schema: keyof DatabaseWithoutInternals },
-  EnumName extends DefaultSchemaEnumNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
-  }
-    ? keyof DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"]
-    : never = never,
-> = DefaultSchemaEnumNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
-}
-  ? DatabaseWithoutInternals[DefaultSchemaEnumNameOrOptions["schema"]]["Enums"][EnumName]
-  : DefaultSchemaEnumNameOrOptions extends keyof DefaultSchema["Enums"]
-    ? DefaultSchema["Enums"][DefaultSchemaEnumNameOrOptions]
-    : never
-
-export type CompositeTypes<
-  PublicCompositeTypeNameOrOptions extends
-    | keyof DefaultSchema["CompositeTypes"]
-    | { schema: keyof DatabaseWithoutInternals },
-  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof DatabaseWithoutInternals
-  }
-    ? keyof DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
-    : never = never,
-> = PublicCompositeTypeNameOrOptions extends {
-  schema: keyof DatabaseWithoutInternals
-}
-  ? DatabaseWithoutInternals[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
-  : PublicCompositeTypeNameOrOptions extends keyof DefaultSchema["CompositeTypes"]
-    ? DefaultSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never
-
-export const Constants = {
-  public: {
-    Enums: {},
-  },
-} as const
-
+[Content skipped: Binary or non-UTF-8 encoded file]
 ```
 
 ### File: `src\lib\utils.ts`
@@ -8641,42 +8435,51 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Check, CreditCard, Building2, Smartphone, Heart, Info } from "lucide-react";
+import { Copy, Check, CreditCard, Building2, Smartphone, Heart, Info, Mail } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const Donate = () => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
   const [donationAmount, setDonationAmount] = useState("");
-  const [selectedTab, setSelectedTab] = useState("paypal");
+  const [selectedTab, setSelectedTab] = useState("international");
+  
+  // NEW STATE: To track the inner banking tab (Local/International)
+  const [selectedBankType, setSelectedBankType] = useState("local"); 
 
+  // UPDATED BANKING DATA STRUCTURE
   const banks = [
     {
-      name: "First Capital Bank Zimbabwe",
-      accountNumber: "1234567890123",
-      accountName: "Future Wings Foundation",
-      branch: "Harare Main Branch",
-      swiftCode: "FCBZZWHX",
+      name: "Nedbank Zimbabwe",
+      type: "local",
+      accountNumberLabel: "Account Number",
+      accountNumber: "11992386586",
+      accountName: "Alisa Adams",
+      branch: "Nedbank",
+      swiftCode: "MBCAZWHX",
+      bic: "18101",
+      notes: "Local Zimbabwean transfers should use this option.",
     },
     {
-      name: "CBZ Bank",
-      accountNumber: "9876543210987",
-      accountName: "Future Wings Foundation",
-      branch: "Avondale Branch",
-      swiftCode: "COBZZWHX",
-    },
-    {
-      name: "Stanbic Bank Zimbabwe",
-      accountNumber: "4567890123456",
-      accountName: "Future Wings Foundation",
-      branch: "Samora Machel Branch",
-      swiftCode: "SBICZWHX",
+      name: "ING Netherlands",
+      type: "international",
+      accountNumberLabel: "IBAN/Account Number",
+      accountNumber: "NL35INGB0794252850",
+      accountName: "Alisa Adams",
+      branch: "ING",
+      swiftCode: "INGBNL2A",
+      bic: null,
+      notes: "Use this for transfers from outside Zimbabwe (International).",
     },
   ];
 
-  const ecocashNumber = "+263 788 123 456";
+  // FIND CURRENTLY SELECTED BANK DETAILS
+  const selectedBank = banks.find(bank => bank.type === selectedBankType) || banks[0];
+
+  const ecocashNumber = "+263 788 123 456"; // Retaining for copyToClipboard placeholder but not used in layout
   const quickAmounts = [25, 50, 100, 250, 500, 1000];
 
+  // Ensure copyToClipboard index is unique across all dynamic fields (using 1, 2, 3, 4)
   const copyToClipboard = (text: string, index: number) => {
     navigator.clipboard.writeText(text);
     setCopiedIndex(index);
@@ -8721,28 +8524,32 @@ const Donate = () => {
           </div>
 
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-6">
-              <TabsTrigger value="paypal" className="text-sm">
+            <TabsList className="grid w-full grid-cols-4 mb-6">
+              <TabsTrigger value="international" className="text-sm">
                 <CreditCard className="w-4 h-4 mr-2" />
-                PayPal
+                International Payments
               </TabsTrigger>
               <TabsTrigger value="bank" className="text-sm">
                 <Building2 className="w-4 h-4 mr-2" />
-                Bank
+                Bank Transfers
               </TabsTrigger>
-              <TabsTrigger value="ecocash" className="text-sm">
+              <TabsTrigger value="worldremit" className="text-sm">
                 <Smartphone className="w-4 h-4 mr-2" />
-                Ecocash
+                WorldRemit
+              </TabsTrigger>
+              <TabsTrigger value="cash" className="text-sm">
+                <Heart className="w-4 h-4 mr-2" />
+                Cash
               </TabsTrigger>
             </TabsList>
 
-            {/* PayPal Tab */}
-            <TabsContent value="paypal" className="space-y-4">
+            {/* International Payments Tab (formerly PayPal) */}
+            <TabsContent value="international" className="space-y-4">
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
                     <CreditCard className="w-4 h-4 text-primary" />
-                    Donate via PayPal
+                    Donate via International Payments (PayPal)
                   </CardTitle>
                   <CardDescription className="text-sm text-foreground/70">
                     Secure payment with PayPal. All major cards accepted.
@@ -8803,7 +8610,7 @@ const Donate = () => {
               </Card>
             </TabsContent>
 
-            {/* Bank Transfer Tab */}
+            {/* Bank Transfers Tab - MAJOR MODIFICATION */}
             <TabsContent value="bank" className="space-y-4">
               <Card>
                 <CardHeader>
@@ -8812,156 +8619,136 @@ const Donate = () => {
                     Bank Transfer Details
                   </CardTitle>
                   <CardDescription className="text-sm text-foreground/70">
-                    Transfer funds directly to our account. Include your name as reference.
+                    Transfer funds directly to our account. Select whether your transfer is local (Zimbabwean) or international.
                   </CardDescription>
                 </CardHeader>
               </Card>
 
-              <div className="space-y-4">
-                {banks.map((bank, index) => (
-                  <Card key={index} className="border">
+              {/* Inner Tab for Local/International */}
+              <Tabs value={selectedBankType} onValueChange={setSelectedBankType}>
+                <TabsList className="grid w-full grid-cols-2">
+                  <TabsTrigger value="local" className="text-sm">
+                    Local (Nedbank Zimbabwe)
+                  </TabsTrigger>
+                  <TabsTrigger value="international" className="text-sm">
+                    International (ING Netherlands)
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value={selectedBankType} className="space-y-4 pt-4">
+                  
+                  <h3 className="text-xl font-bold text-foreground">{selectedBank.name}</h3>
+
+                  {/* Dynamic Bank Details Card */}
+                  <Card className="border">
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-base">{bank.name}</CardTitle>
+                      <CardTitle className="text-base">Account Information</CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3">
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                        <div className="space-y-1">
-                          <Label className="text-xs text-foreground/60">Account Name</Label>
-                          <div className="flex items-center gap-2 p-2 bg-muted/30 rounded border">
-                            <p className="text-sm font-medium text-foreground flex-1">{bank.accountName}</p>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-7 w-7"
-                              onClick={() => copyToClipboard(bank.accountName, index * 10 + 1)}
-                            >
-                              {copiedIndex === index * 10 + 1 ? (
-                                <Check className="w-3.5 h-3.5 text-primary" />
-                              ) : (
-                                <Copy className="w-3.5 h-3.5" />
-                              )}
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs text-foreground/60">Account Number</Label>
-                          <div className="flex items-center gap-2 p-2 bg-muted/30 rounded border">
-                            <p className="text-xs font-mono font-medium text-foreground flex-1">{bank.accountNumber}</p>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-7 w-7"
-                              onClick={() => copyToClipboard(bank.accountNumber, index * 10 + 2)}
-                            >
-                              {copiedIndex === index * 10 + 2 ? (
-                                <Check className="w-3.5 h-3.5 text-primary" />
-                              ) : (
-                                <Copy className="w-3.5 h-3.5" />
-                              )}
-                            </Button>
-                          </div>
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs text-foreground/60">Branch</Label>
-                          <div className="p-2 bg-muted/30 rounded border">
-                            <p className="text-sm font-medium text-foreground">{bank.branch}</p>
-                          </div>
-                        </div>
-                        <div className="space-y-1">
-                          <Label className="text-xs text-foreground/60">SWIFT Code</Label>
-                          <div className="flex items-center gap-2 p-2 bg-muted/30 rounded border">
-                            <p className="text-xs font-mono font-medium text-foreground flex-1">{bank.swiftCode}</p>
-                            <Button
-                              variant="ghost"
-                              size="icon"
-                              className="h-7 w-7"
-                              onClick={() => copyToClipboard(bank.swiftCode, index * 10 + 3)}
-                            >
-                              {copiedIndex === index * 10 + 3 ? (
-                                <Check className="w-3.5 h-3.5 text-primary" />
-                              ) : (
-                                <Copy className="w-3.5 h-3.5" />
-                              )}
-                            </Button>
-                          </div>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
-
-              <Card className="bg-muted/30 border">
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-2">
-                    <Info className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-foreground">
-                      <strong>Important:</strong> After making a bank transfer, please email confirmation to{" "}
-                      <a href="mailto:alisa@futurewingsfoundation.com" className="text-primary hover:underline">
-                        alisa@futurewingsfoundation.com
-                      </a>{" "}
-                      with your name and transaction reference.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
-            </TabsContent>
-
-            {/* Ecocash Tab */}
-            <TabsContent value="ecocash" className="space-y-4">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="text-lg flex items-center gap-2">
-                    <Smartphone className="w-4 h-4 text-primary" />
-                    Donate via Ecocash
-                  </CardTitle>
-                  <CardDescription className="text-sm text-foreground/70">
-                    Send your donation using Ecocash mobile money transfer.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="p-4 bg-muted/30 rounded-lg border">
-                    <div className="space-y-4">
-                      <div>
-                        <Label className="text-xs text-foreground/60 mb-2 block">Ecocash Number</Label>
-                        <div className="flex items-center gap-2 p-3 bg-background rounded border">
-                          <p className="text-lg font-semibold text-foreground flex-1">{ecocashNumber}</p>
+                      
+                      {/* Account Name - MODIFIED LAYOUT */}
+                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                        <Label className="text-xs font-semibold text-foreground/70">Account Name</Label>
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-medium text-foreground">{selectedBank.accountName}</p>
                           <Button
-                            variant="default"
+                            variant="ghost"
                             size="icon"
-                            className="h-8 w-8"
-                            onClick={() => copyToClipboard(ecocashNumber, 100)}
+                            className="h-7 w-7"
+                            onClick={() => copyToClipboard(selectedBank.accountName, 1)}
                           >
-                            {copiedIndex === 100 ? (
-                              <Check className="w-4 h-4" />
+                            {copiedIndex === 1 ? (
+                              <Check className="w-3.5 h-3.5 text-primary" />
                             ) : (
-                              <Copy className="w-4 h-4" />
+                              <Copy className="w-3.5 h-3.5" />
                             )}
                           </Button>
                         </div>
                       </div>
 
-                      <Separator />
-
-                      <div>
-                        <Label className="text-xs text-foreground/60 mb-2 block">Account Name</Label>
-                        <div className="p-3 bg-background rounded border">
-                          <p className="text-sm font-medium text-foreground">Future Wings Foundation</p>
+                      {/* Account Number / IBAN - MODIFIED LAYOUT */}
+                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                        <Label className="text-xs font-semibold text-foreground/70">{selectedBank.accountNumberLabel}</Label>
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-mono font-medium text-foreground">{selectedBank.accountNumber}</p>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7"
+                            onClick={() => copyToClipboard(selectedBank.accountNumber, 2)}
+                          >
+                            {copiedIndex === 2 ? (
+                              <Check className="w-3.5 h-3.5 text-primary" />
+                            ) : (
+                              <Copy className="w-3.5 h-3.5" />
+                            )}
+                          </Button>
                         </div>
                       </div>
-                    </div>
-                  </div>
 
-                  <Card className="border">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm flex items-center gap-2">
-                        <Info className="w-4 h-4 text-primary" />
-                        How to Donate via Ecocash
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ol className="list-decimal list-inside space-y-2 text-xs text-foreground">
-                        <li>Dial <strong className="text-primary">*151#</strong
+                      {/* Bank / Branch Name - MODIFIED LAYOUT */}
+                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                        <Label className="text-xs font-semibold text-foreground/70">Bank Name / Branch</Label>
+                        <div className="p-0">
+                          <p className="text-sm font-medium text-foreground">{selectedBank.branch}</p>
+                        </div>
+                      </div>
+
+                      {/* SWIFT Code - MODIFIED LAYOUT */}
+                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                        <Label className="text-xs font-semibold text-foreground/70">SWIFT Code</Label>
+                        <div className="flex items-center gap-2">
+                          <p className="text-sm font-mono font-medium text-foreground">{selectedBank.swiftCode}</p>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-7 w-7"
+                            onClick={() => copyToClipboard(selectedBank.swiftCode, 3)}
+                          >
+                            {copiedIndex === 3 ? (
+                              <Check className="w-3.5 h-3.5 text-primary" />
+                            ) : (
+                              <Copy className="w-3.5 h-3.5" />
+                            )}
+                          </Button>
+                        </div>
+                      </div>
+                      
+                      {/* BIC Code (Conditional) - MODIFIED LAYOUT */}
+                      {selectedBank.bic && (
+                        <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                          <Label className="text-xs font-semibold text-foreground/70">BIC Code</Label>
+                          <div className="flex items-center gap-2">
+                            <p className="text-sm font-mono font-medium text-foreground">{selectedBank.bic}</p>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-7 w-7"
+                              onClick={() => copyToClipboard(selectedBank.bic, 4)}
+                            >
+                              {copiedIndex === 4 ? (
+                                <Check className="w-3.5 h-3.5 text-primary" />
+                              ) : (
+                                <Copy className="w-3.5 h-3.5" />
+                              )}
+                            </Button>
+                          </div>
+                        </div>
+                      )}
+
+                    </CardContent>
+                  </Card>
+                  
+                  {/* General Note */}
+                  <Card className="bg-muted/30 border">
+                    <CardContent className="p-4">
+                      <div className="flex items-start gap-2">
+                        <Info className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
+                        <p className="text-xs text-foreground">
+                          {selectedBank.notes}
+                        </p>
+                      </div>
+                    </CardConten
 
 ... [Content truncated at 15000 characters] ...
 ```
@@ -9043,7 +8830,8 @@ export default NotFound;
 ### File: `supabase\config.toml`
 
 ```toml
-project_id = "mfrzfsflerjronybctft"
+project_id = "llvgrketqgxonwxxylpr"
+
 ```
 
 ### File: `supabase\migrations\20250913053826_6f09caa2-7bd5-404e-a2c7-32d2f69401a7.sql`
@@ -9204,8 +8992,8 @@ INSERT INTO public.content_sections (section_key, section_name, content) VALUES
 ('impact_section', 'Impact Section', '{
   "mainTitle": "Our Impact",
   "mainDescription": "Founded in 2024, Future Wings began as an explorative initiative to understand what really holds students back from succeeding in school.",
-  "studentsSupported": "718",
-  "sanitaryPads": "5,500+",
+  "studentsSupported": "912",
+  "sanitaryPads": "6,500+",
   "winterJerseys": "40+", 
   "schoolsRenovated": "1",
   "ctaTitle": "Ready to Make a Difference?",
@@ -9213,4 +9001,16 @@ INSERT INTO public.content_sections (section_key, section_name, content) VALUES
 }'::jsonb)
 ON CONFLICT (section_key) DO UPDATE SET 
 content = EXCLUDED.content;
+```
+
+### File: `supabase\migrations\20251114092512_seed_initial_roles.sql`
+
+```sql
+-- Example for seeding a new Admin profile if one doesn't exist
+INSERT INTO public.profiles (user_id, email, role)
+VALUES (
+  'auth.uid()', -- Replace with a known admin user_id or a placeholder
+  'admin@example.com', 
+  'admin'
+) ON CONFLICT (email) DO NOTHING;
 ```

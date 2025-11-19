@@ -7,6 +7,13 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
+  // Social Media Links
+  const socialLinks = {
+    facebook: "https://www.facebook.com/share/1GDaqifroE/",
+    instagram: "https://www.instagram.com/futurewingsfoundation?igsh=cWo0d3VpdmNuejF0",
+    linkedin: "https://www.linkedin.com/company/future-wings-foundation/"
+  };
+
   const scrollToSection = (sectionId: string) => {
     setIsMobileMenuOpen(false);
     
@@ -48,9 +55,30 @@ const Header = () => {
               <span>+263 788863452</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Facebook className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
-              <Instagram className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
-              <Linkedin className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
+              <a 
+                href={socialLinks.facebook} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Visit us on Facebook"
+              >
+                <Facebook className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
+              </a>
+              <a 
+                href={socialLinks.instagram} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Visit us on Instagram"
+              >
+                <Instagram className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
+              </a>
+              <a 
+                href={socialLinks.linkedin} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Visit us on LinkedIn"
+              >
+                <Linkedin className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
+              </a>
             </div>
           </div>
         </div>
@@ -142,9 +170,30 @@ const Header = () => {
               
               {/* Mobile Social Links */}
               <div className="flex items-center justify-center space-x-4 pt-4 border-t">
-                <Facebook className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
-                <Instagram className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
-                <Linkedin className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
+                <a 
+                  href={socialLinks.facebook} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Visit us on Facebook"
+                >
+                  <Facebook className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
+                </a>
+                <a 
+                  href={socialLinks.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Visit us on Instagram"
+                >
+                  <Instagram className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
+                </a>
+                <a 
+                  href={socialLinks.linkedin} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Visit us on LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
+                </a>
               </div>
 
               {/* Mobile Contact Info */}

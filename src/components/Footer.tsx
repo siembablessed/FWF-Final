@@ -1,29 +1,98 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const scrollToSection = (sectionId: string) => {
+    // If we are not on the home page, navigate to home first
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Add a small delay to allow the navigation to complete before scrolling
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+      return;
+    }
+
+    // If we are already on home, just scroll
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleUnderDevelopment = (e: React.MouseEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Coming Soon",
+      description: "This section is currently under development. Please check back later!",
+    });
+  };
+
   return (
-    <footer className="bg-foreground text-background">
+    <footer className="bg-foreground text-background" id="contact">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {/* Quick Links */}
           <div className="sm:col-span-1">
             <h3 className="text-base sm:text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">Home</a></li>
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">About Us</a></li>
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">Our Impact</a></li>
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">Contact Us</a></li>
+            <ul className="space-y-2 flex flex-col items-start">
+              <li>
+                <button 
+                  onClick={() => scrollToSection('hero')} 
+                  className="text-sm sm:text-base hover:text-primary transition-colors text-left"
+                >
+                  Home
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('about')} 
+                  className="text-sm sm:text-base hover:text-primary transition-colors text-left"
+                >
+                  About Us
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('impact')} 
+                  className="text-sm sm:text-base hover:text-primary transition-colors text-left"
+                >
+                  Our Impact
+                </button>
+              </li>
             </ul>
           </div>
 
-          {/* Other Pages */}
+          {/* Other Pages - Now functional with "Under Development" toast */}
           <div className="sm:col-span-1">
             <h3 className="text-base sm:text-lg font-semibold mb-4">Other Pages</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">Impact Reports</a></li>
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">Annual Reports</a></li>
+            <ul className="space-y-2 flex flex-col items-start">
+              <li>
+                <button 
+                  onClick={handleUnderDevelopment}
+                  className="text-sm sm:text-base hover:text-primary transition-colors text-left"
+                >
+                  Impact Reports
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={handleUnderDevelopment}
+                  className="text-sm sm:text-base hover:text-primary transition-colors text-left"
+                >
+                  Annual Reports
+                </button>
+              </li>
             </ul>
           </div>
 

@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Check, CreditCard, Building2, Smartphone, Heart, Info, Mail } from "lucide-react";
+import { Copy, Check, CreditCard, Building2, Smartphone, Heart, Info, Mail, MapPin, Phone } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -14,10 +14,10 @@ const Donate = () => {
   const [donationAmount, setDonationAmount] = useState("");
   const [selectedTab, setSelectedTab] = useState("international");
   
-  // NEW STATE: To track the inner banking tab (Local/International)
+  // State for the inner banking tab (Local/International)
   const [selectedBankType, setSelectedBankType] = useState("local"); 
 
-  // UPDATED BANKING DATA STRUCTURE
+  // BANKING DATA
   const banks = [
     {
       name: "Nedbank Zimbabwe",
@@ -43,13 +43,17 @@ const Donate = () => {
     },
   ];
 
-  // FIND CURRENTLY SELECTED BANK DETAILS
   const selectedBank = banks.find(bank => bank.type === selectedBankType) || banks[0];
 
-  const ecocashNumber = "+263 788 123 456"; // Retaining for copyToClipboard placeholder but not used in layout
+  // Shared details for WorldRemit & EcoCash
+  const mobileMoneyDetails = {
+    recipientName: "Alisa Adams",
+    number: "+263 788 863 452",
+    localNumber: "0788 863 452"
+  };
+
   const quickAmounts = [25, 50, 100, 250, 500, 1000];
 
-  // Ensure copyToClipboard index is unique across all dynamic fields (using 1, 2, 3, 4)
   const copyToClipboard = (text: string, index: number) => {
     navigator.clipboard.writeText(text);
     setCopiedIndex(index);
@@ -57,7 +61,7 @@ const Donate = () => {
   };
 
   const handlePayPalDonate = () => {
-    // Replace with your actual PayPal donation link
+    // Replace with actual PayPal donation link
     const paypalUrl = `https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID&amount=${donationAmount || 0}`;
     window.open(paypalUrl, "_blank");
   };
@@ -94,26 +98,26 @@ const Donate = () => {
           </div>
 
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
-              <TabsTrigger value="international" className="text-sm">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-6 h-auto">
+              <TabsTrigger value="international" className="text-sm py-3">
                 <CreditCard className="w-4 h-4 mr-2" />
-                International Payments
+                International
               </TabsTrigger>
-              <TabsTrigger value="bank" className="text-sm">
+              <TabsTrigger value="bank" className="text-sm py-3">
                 <Building2 className="w-4 h-4 mr-2" />
-                Bank Transfers
+                Bank Transfer
               </TabsTrigger>
-              <TabsTrigger value="worldremit" className="text-sm">
+              <TabsTrigger value="remit" className="text-sm py-3">
                 <Smartphone className="w-4 h-4 mr-2" />
-                WorldRemit
+                WorldRemit / EcoCash
               </TabsTrigger>
-              <TabsTrigger value="cash" className="text-sm">
+              <TabsTrigger value="cash" className="text-sm py-3">
                 <Heart className="w-4 h-4 mr-2" />
-                Cash
+                Drop-off / Cash
               </TabsTrigger>
             </TabsList>
 
-            {/* International Payments Tab (formerly PayPal) */}
+            {/* 1. International Payments Tab (PayPal) */}
             <TabsContent value="international" className="space-y-4">
               <Card>
                 <CardHeader>
@@ -139,7 +143,6 @@ const Donate = () => {
                       className="h-10"
                     />
 
-                    {/* Quick Amount Buttons */}
                     <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-3">
                       {quickAmounts.map((amount) => (
                         <Button
@@ -162,7 +165,7 @@ const Donate = () => {
                     <div className="flex items-start gap-2">
                       <Info className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                       <p className="text-xs text-foreground/80">
-                        You'll be redirected to PayPal's secure payment page. All major credit cards, debit cards, and PayPal accounts accepted.
+                        You'll be redirected to PayPal's secure payment page.
                       </p>
                     </div>
                   </div>
@@ -180,7 +183,7 @@ const Donate = () => {
               </Card>
             </TabsContent>
 
-            {/* Bank Transfers Tab - MAJOR MODIFICATION */}
+            {/* 2. Bank Transfers Tab */}
             <TabsContent value="bank" className="space-y-4">
               <Card>
                 <CardHeader>
@@ -189,35 +192,28 @@ const Donate = () => {
                     Bank Transfer Details
                   </CardTitle>
                   <CardDescription className="text-sm text-foreground/70">
-                    Transfer funds directly to our account. Select whether your transfer is local (Zimbabwean) or international.
+                    Direct transfer. Select local or international.
                   </CardDescription>
                 </CardHeader>
               </Card>
 
-              {/* Inner Tab for Local/International */}
               <Tabs value={selectedBankType} onValueChange={setSelectedBankType}>
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="local" className="text-sm">
-                    Local (Nedbank Zimbabwe)
+                    Local (Nedbank)
                   </TabsTrigger>
                   <TabsTrigger value="international" className="text-sm">
-                    International (ING Netherlands)
+                    International (ING)
                   </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value={selectedBankType} className="space-y-4 pt-4">
-                  
                   <h3 className="text-xl font-bold text-foreground">{selectedBank.name}</h3>
 
-                  {/* Dynamic Bank Details Card */}
                   <Card className="border">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-base">Account Information</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      
-                      {/* Account Name - MODIFIED LAYOUT */}
-                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                    <CardContent className="space-y-0 p-0">
+                      {/* Account Name */}
+                      <div className="flex justify-between items-center p-4 border-b border-border/50">
                         <Label className="text-xs font-semibold text-foreground/70">Account Name</Label>
                         <div className="flex items-center gap-2">
                           <p className="text-sm font-medium text-foreground">{selectedBank.accountName}</p>
@@ -227,17 +223,13 @@ const Donate = () => {
                             className="h-7 w-7"
                             onClick={() => copyToClipboard(selectedBank.accountName, 1)}
                           >
-                            {copiedIndex === 1 ? (
-                              <Check className="w-3.5 h-3.5 text-primary" />
-                            ) : (
-                              <Copy className="w-3.5 h-3.5" />
-                            )}
+                            {copiedIndex === 1 ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
                           </Button>
                         </div>
                       </div>
 
-                      {/* Account Number / IBAN - MODIFIED LAYOUT */}
-                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                      {/* Account Number */}
+                      <div className="flex justify-between items-center p-4 border-b border-border/50">
                         <Label className="text-xs font-semibold text-foreground/70">{selectedBank.accountNumberLabel}</Label>
                         <div className="flex items-center gap-2">
                           <p className="text-sm font-mono font-medium text-foreground">{selectedBank.accountNumber}</p>
@@ -247,25 +239,13 @@ const Donate = () => {
                             className="h-7 w-7"
                             onClick={() => copyToClipboard(selectedBank.accountNumber, 2)}
                           >
-                            {copiedIndex === 2 ? (
-                              <Check className="w-3.5 h-3.5 text-primary" />
-                            ) : (
-                              <Copy className="w-3.5 h-3.5" />
-                            )}
+                            {copiedIndex === 2 ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
                           </Button>
                         </div>
                       </div>
 
-                      {/* Bank / Branch Name - MODIFIED LAYOUT */}
-                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
-                        <Label className="text-xs font-semibold text-foreground/70">Bank Name / Branch</Label>
-                        <div className="p-0">
-                          <p className="text-sm font-medium text-foreground">{selectedBank.branch}</p>
-                        </div>
-                      </div>
-
-                      {/* SWIFT Code - MODIFIED LAYOUT */}
-                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                      {/* SWIFT */}
+                      <div className="flex justify-between items-center p-4 border-b border-border/50">
                         <Label className="text-xs font-semibold text-foreground/70">SWIFT Code</Label>
                         <div className="flex items-center gap-2">
                           <p className="text-sm font-mono font-medium text-foreground">{selectedBank.swiftCode}</p>
@@ -275,18 +255,14 @@ const Donate = () => {
                             className="h-7 w-7"
                             onClick={() => copyToClipboard(selectedBank.swiftCode, 3)}
                           >
-                            {copiedIndex === 3 ? (
-                              <Check className="w-3.5 h-3.5 text-primary" />
-                            ) : (
-                              <Copy className="w-3.5 h-3.5" />
-                            )}
+                            {copiedIndex === 3 ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
                           </Button>
                         </div>
                       </div>
                       
-                      {/* BIC Code (Conditional) - MODIFIED LAYOUT */}
+                      {/* BIC (If exists) */}
                       {selectedBank.bic && (
-                        <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                        <div className="flex justify-between items-center p-4">
                           <Label className="text-xs font-semibold text-foreground/70">BIC Code</Label>
                           <div className="flex items-center gap-2">
                             <p className="text-sm font-mono font-medium text-foreground">{selectedBank.bic}</p>
@@ -296,148 +272,144 @@ const Donate = () => {
                               className="h-7 w-7"
                               onClick={() => copyToClipboard(selectedBank.bic, 4)}
                             >
-                              {copiedIndex === 4 ? (
-                                <Check className="w-3.5 h-3.5 text-primary" />
-                              ) : (
-                                <Copy className="w-3.5 h-3.5" />
-                              )}
+                              {copiedIndex === 4 ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
                             </Button>
                           </div>
                         </div>
                       )}
-
                     </CardContent>
                   </Card>
                   
-                  {/* General Note */}
-                  <Card className="bg-muted/30 border">
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-2">
-                        <Info className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        <p className="text-xs text-foreground">
-                          {selectedBank.notes}
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground px-1">
+                    <Info className="w-3 h-3" />
+                    <p>{selectedBank.notes}</p>
+                  </div>
                 </TabsContent>
               </Tabs>
-              
-              <Card className="bg-muted/30 border">
-                <CardContent className="p-4">
-                  <div className="flex items-start gap-2">
-                    <Info className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                    <p className="text-xs text-foreground">
-                      <strong>Important:</strong> After making a bank transfer, please email confirmation to{" "}
-                      <a href="mailto:alisa@futurewingsfoundation.com" className="text-primary hover:underline">
-                        alisa@futurewingsfoundation.com
-                      </a>{" "}
-                      with your name and transaction reference.
-                    </p>
-                  </div>
-                </CardContent>
-              </Card>
             </TabsContent>
 
-            {/* WorldRemit Tab (Replaces Ecocash) */}
-            <TabsContent value="worldremit" className="space-y-4">
+            {/* 3. WorldRemit & EcoCash Tab - COMBINED */}
+            <TabsContent value="remit" className="space-y-4">
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
                     <Smartphone className="w-4 h-4 text-primary" />
-                    Donate via WorldRemit
+                    WorldRemit & EcoCash
                   </CardTitle>
                   <CardDescription className="text-sm text-foreground/70">
-                    Send your donation using WorldRemit mobile money or bank transfer.
+                    Send money via WorldRemit or locally using EcoCash. Both use the same recipient details.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="p-4 bg-muted/30 rounded-lg border">
-                    <div className="space-y-4">
+                <CardContent className="space-y-6">
+                  
+                  {/* Recipient Details Card */}
+                  <div className="bg-primary/5 border border-primary/10 rounded-lg p-4">
+                    <h4 className="text-sm font-bold text-primary mb-3 uppercase tracking-wide">Recipient Details</h4>
+                    <div className="grid gap-4 sm:grid-cols-2">
                       <div>
-                        <Label className="text-xs text-foreground/60 mb-2 block">Mobile Money Recipient Number</Label>
-                        <div className="flex items-center gap-2 p-3 bg-background rounded border">
-                          <p className="text-lg font-semibold text-foreground flex-1">0788863452</p>
+                        <Label className="text-xs text-muted-foreground">Recipient Name</Label>
+                        <div className="flex items-center gap-2">
+                          <p className="text-base font-medium">{mobileMoneyDetails.recipientName}</p>
                           <Button
-                            variant="default"
+                            variant="ghost"
                             size="icon"
-                            className="h-8 w-8"
-                            onClick={() => copyToClipboard("0788863452", 100)}
+                            className="h-6 w-6"
+                            onClick={() => copyToClipboard(mobileMoneyDetails.recipientName, 10)}
                           >
-                            {copiedIndex === 100 ? (
-                              <Check className="w-4 h-4" />
-                            ) : (
-                              <Copy className="w-4 h-4" />
-                            )}
+                             {copiedIndex === 10 ? <Check className="w-3 h-3 text-primary" /> : <Copy className="w-3 h-3" />}
                           </Button>
                         </div>
                       </div>
-
-                      <Separator />
-
                       <div>
-                        <Label className="text-xs text-foreground/60 mb-2 block">Recipient Name (for Payout)</Label>
-                        <div className="p-3 bg-background rounded border">
-                          <p className="text-sm font-medium text-foreground">Future Wings Foundation</p>
+                        <Label className="text-xs text-muted-foreground">Mobile Number</Label>
+                        <div className="flex items-center gap-2">
+                          <p className="text-base font-mono font-medium">{mobileMoneyDetails.number}</p>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6"
+                            onClick={() => copyToClipboard(mobileMoneyDetails.number, 11)}
+                          >
+                             {copiedIndex === 11 ? <Check className="w-3 h-3 text-primary" /> : <Copy className="w-3 h-3" />}
+                          </Button>
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  <Card className="border">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-sm flex items-center gap-2">
-                        <Info className="w-4 h-4 text-primary" />
-                        How to Send via WorldRemit
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <ol className="list-decimal list-inside space-y-2 text-xs text-foreground">
-                        <li>Visit the WorldRemit website or use their app.</li>
-                        <li>Select the destination country: **Zimbabwe**.</li>
-                        <li>Choose a transfer option (e.g., Mobile Money/Cash Pickup/Bank Deposit).</li>
-                        <li>Enter the recipient number **0788863452** or use our organization name.</li>
-                        <li>Complete the transaction and send confirmation email.</li>
-                      </ol>
-                    </CardContent>
-                  </Card>
+                  <div className="grid md:grid-cols-2 gap-6">
+                    {/* EcoCash Steps */}
+                    <div className="space-y-3">
+                      <h4 className="font-semibold flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs">1</span>
+                        EcoCash (Local)
+                      </h4>
+                      <div className="bg-card border rounded-lg p-4 text-sm space-y-2 shadow-sm">
+                        <p className="font-medium text-foreground/80">Dial *151#</p>
+                        {/* Changed text-muted-foreground to text-foreground for visibility */}
+                        <ol className="list-decimal list-inside space-y-1.5 text-foreground ml-1">
+                          <li>Select <span className="font-medium">Send Money</span></li>
+                          <li>Select <span className="font-medium">Send to Registered Customer</span></li>
+                          <li>Enter Number: <span className="font-mono select-all">{mobileMoneyDetails.localNumber}</span></li>
+                          <li>Enter Amount</li>
+                          <li>Confirm Name: <span className="font-medium text-primary">{mobileMoneyDetails.recipientName}</span></li>
+                        </ol>
+                      </div>
+                    </div>
+
+                    {/* WorldRemit Steps */}
+                    <div className="space-y-3">
+                      <h4 className="font-semibold flex items-center gap-2">
+                        <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs">2</span>
+                        WorldRemit (International)
+                      </h4>
+                      <div className="bg-card border rounded-lg p-4 text-sm space-y-2 shadow-sm">
+                        <p className="text-foreground/80">Open the WorldRemit App or Website:</p>
+                        {/* Changed text-muted-foreground to text-foreground for visibility */}
+                        <ul className="list-disc list-inside space-y-1.5 text-foreground ml-1">
+                          <li>Select Country: <span className="font-medium">Zimbabwe</span></li>
+                          <li>Select Service: <span className="font-medium">Mobile Money (EcoCash)</span> or <span className="font-medium">Cash Pickup</span></li>
+                          <li>Enter Amount</li>
+                          <li>Recipient: <span className="font-medium text-primary">{mobileMoneyDetails.recipientName}</span></li>
+                          <li>Mobile: <span className="font-mono select-all">{mobileMoneyDetails.number}</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
                 </CardContent>
               </Card>
             </TabsContent>
 
-            {/* Cash Tab (NO CHANGE) */}
+            {/* 4. Cash / Drop-off Tab */}
             <TabsContent value="cash" className="space-y-4">
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
-                    <Heart className="w-4 h-4 text-primary" />
-                    Cash Donation / Drop-off
+                    <MapPin className="w-4 h-4 text-primary" />
+                    Drop-off / Cash Donations
                   </CardTitle>
                   <CardDescription className="text-sm text-foreground/70">
-                    If you prefer to donate physical cash, please coordinate directly with our team for a secure drop-off.
+                    You can drop off cash or physical goods (clothing, pads, books) at our office.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="bg-muted/50 p-4 rounded-lg border">
-                    <div className="flex items-start gap-2">
-                      <Info className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                      <p className="text-sm text-foreground/80">
-                        **Important:** Please **do not** send cash by mail. Contact us first to arrange a secure and verified drop-off or pickup.
+                   <div className="bg-muted/30 border rounded-lg p-6 text-center">
+                      <h4 className="font-semibold mb-2">Visit Us In Harare</h4>
+                      <p className="text-sm text-muted-foreground mb-4">
+                        Please contact us first to schedule a drop-off to ensure someone is available to receive your donation.
                       </p>
-                    </div>
-                  </div>
-                  <a href="mailto:alisa@futurewingsfoundation.com">
-                    <Button 
-                      className="w-full"
-                      variant="rounded"
-                    >
-                      <Mail className="w-4 h-4 mr-2" />
-                      COORDINATE DROP-OFF VIA EMAIL
-                    </Button>
-                  </a>
-                  <div className="text-center text-sm text-foreground/70">
-                    or call us at +263 788863452
-                  </div>
+                      <div className="flex flex-col items-center gap-2 text-sm font-medium">
+                        <div className="flex items-center gap-2">
+                           <Phone className="w-4 h-4 text-primary" />
+                           <span>+263 788 863 452</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                           <Mail className="w-4 h-4 text-primary" />
+                           <span>alisa@futurewingsfoundation.com</span>
+                        </div>
+                      </div>
+                   </div>
                 </CardContent>
               </Card>
             </TabsContent>
