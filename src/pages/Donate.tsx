@@ -4,8 +4,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Separator } from "@/components/ui/separator";
-import { Copy, Check, CreditCard, Building2, Smartphone, Heart, Info, Mail, MapPin, Phone } from "lucide-react";
+// Added MapPin, Phone, Mail to the imports below
+import { Copy, Check, CreditCard, Building2, Smartphone, Heart, Info, MapPin, Phone, Mail } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -61,9 +61,9 @@ const Donate = () => {
   };
 
   const handlePayPalDonate = () => {
-    // Replace with actual PayPal donation link
-    const paypalUrl = `https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID&amount=${donationAmount || 0}`;
-    window.open(paypalUrl, "_blank");
+    // Updated donation link to PanxPan project page
+    const donationUrl = "https://www.panxpan.com/projects/pack-dignity-unlock-potential";
+    window.open(donationUrl, "_blank");
   };
 
   return (
@@ -117,16 +117,16 @@ const Donate = () => {
               </TabsTrigger>
             </TabsList>
 
-            {/* 1. International Payments Tab (PayPal) */}
+            {/* 1. International Payments Tab (PayPal/Card via PanxPan) */}
             <TabsContent value="international" className="space-y-4">
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
                     <CreditCard className="w-4 h-4 text-primary" />
-                    Donate via International Payments (PayPal)
+                    Donate via International Payments
                   </CardTitle>
                   <CardDescription className="text-sm text-foreground/70">
-                    Secure payment with PayPal. All major cards accepted.
+                    Secure payment via PanxPan. All major cards accepted.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
@@ -165,7 +165,7 @@ const Donate = () => {
                     <div className="flex items-start gap-2">
                       <Info className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                       <p className="text-xs text-foreground/80">
-                        You'll be redirected to PayPal's secure payment page.
+                        You'll be redirected to our secure project page to complete the donation.
                       </p>
                     </div>
                   </div>
@@ -323,7 +323,7 @@ const Donate = () => {
                       <div>
                         <Label className="text-xs text-muted-foreground">Mobile Number</Label>
                         <div className="flex items-center gap-2">
-                          <p className="text-base font-mono font-medium">{mobileMoneyDetails.number}</p>
+                          <p className="text-base font-medium">{mobileMoneyDetails.number}</p>
                           <Button
                             variant="ghost"
                             size="icon"
@@ -333,47 +333,43 @@ const Donate = () => {
                              {copiedIndex === 11 ? <Check className="w-3 h-3 text-primary" /> : <Copy className="w-3 h-3" />}
                           </Button>
                         </div>
+                        <p className="text-[10px] text-muted-foreground mt-1">Local: {mobileMoneyDetails.localNumber}</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-6">
-                    {/* EcoCash Steps */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs">1</span>
-                        EcoCash (Local)
-                      </h4>
-                      <div className="bg-card border rounded-lg p-4 text-sm space-y-2 shadow-sm">
-                        <p className="font-medium text-foreground/80">Dial *151#</p>
-                        {/* Changed text-muted-foreground to text-foreground for visibility */}
-                        <ol className="list-decimal list-inside space-y-1.5 text-foreground ml-1">
-                          <li>Select <span className="font-medium">Send Money</span></li>
-                          <li>Select <span className="font-medium">Send to Registered Customer</span></li>
-                          <li>Enter Number: <span className="font-mono select-all">{mobileMoneyDetails.localNumber}</span></li>
-                          <li>Enter Amount</li>
-                          <li>Confirm Name: <span className="font-medium text-primary">{mobileMoneyDetails.recipientName}</span></li>
-                        </ol>
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {/* WorldRemit Instructions */}
+                    <div className="border rounded-lg p-4 space-y-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-8 h-8 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                          <span className="font-bold text-xs">WR</span>
+                        </div>
+                        <h4 className="font-semibold text-sm">WorldRemit</h4>
                       </div>
+                      <ol className="list-decimal list-inside text-xs space-y-2 text-foreground/80">
+                        <li>Download/Open WorldRemit app</li>
+                        <li>Select <strong>Zimbabwe</strong> as country</li>
+                        <li>Choose <strong>Mobile Money</strong> transfer</li>
+                        <li>Select <strong>EcoCash</strong> as provider</li>
+                        <li>Use the recipient details above</li>
+                      </ol>
                     </div>
 
-                    {/* WorldRemit Steps */}
-                    <div className="space-y-3">
-                      <h4 className="font-semibold flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs">2</span>
-                        WorldRemit (International)
-                      </h4>
-                      <div className="bg-card border rounded-lg p-4 text-sm space-y-2 shadow-sm">
-                        <p className="text-foreground/80">Open the WorldRemit App or Website:</p>
-                        {/* Changed text-muted-foreground to text-foreground for visibility */}
-                        <ul className="list-disc list-inside space-y-1.5 text-foreground ml-1">
-                          <li>Select Country: <span className="font-medium">Zimbabwe</span></li>
-                          <li>Select Service: <span className="font-medium">Mobile Money (EcoCash)</span> or <span className="font-medium">Cash Pickup</span></li>
-                          <li>Enter Amount</li>
-                          <li>Recipient: <span className="font-medium text-primary">{mobileMoneyDetails.recipientName}</span></li>
-                          <li>Mobile: <span className="font-mono select-all">{mobileMoneyDetails.number}</span></li>
-                        </ul>
+                    {/* EcoCash Instructions */}
+                    <div className="border rounded-lg p-4 space-y-3">
+                      <div className="flex items-center gap-2 mb-2">
+                        <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                          <span className="font-bold text-xs">EC</span>
+                        </div>
+                        <h4 className="font-semibold text-sm">EcoCash (Local)</h4>
                       </div>
+                      <ol className="list-decimal list-inside text-xs space-y-2 text-foreground/80">
+                        <li>Dial <strong>*151#</strong></li>
+                        <li>Select <strong>Send Money</strong></li>
+                        <li>Enter number: <strong>{mobileMoneyDetails.localNumber}</strong></li>
+                        <li>Enter amount & confirm name is <strong>{mobileMoneyDetails.recipientName}</strong></li>
+                      </ol>
                     </div>
                   </div>
 
@@ -381,35 +377,45 @@ const Donate = () => {
               </Card>
             </TabsContent>
 
-            {/* 4. Cash / Drop-off Tab */}
-            <TabsContent value="cash" className="space-y-4">
+             {/* 4. Drop-off / Cash Tab */}
+             <TabsContent value="cash" className="space-y-4">
               <Card>
                 <CardHeader>
                   <CardTitle className="text-lg flex items-center gap-2">
-                    <MapPin className="w-4 h-4 text-primary" />
-                    Drop-off / Cash Donations
+                    <Heart className="w-4 h-4 text-primary" />
+                    Drop-off & Cash Donations
                   </CardTitle>
                   <CardDescription className="text-sm text-foreground/70">
-                    You can drop off cash or physical goods (clothing, pads, books) at our office.
+                    Visit us to donate cash or goods in person.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                   <div className="bg-muted/30 border rounded-lg p-6 text-center">
-                      <h4 className="font-semibold mb-2">Visit Us In Harare</h4>
-                      <p className="text-sm text-muted-foreground mb-4">
-                        Please contact us first to schedule a drop-off to ensure someone is available to receive your donation.
-                      </p>
-                      <div className="flex flex-col items-center gap-2 text-sm font-medium">
-                        <div className="flex items-center gap-2">
-                           <Phone className="w-4 h-4 text-primary" />
-                           <span>+263 788 863 452</span>
+                  <div className="bg-muted/30 p-4 rounded-lg border border-border/50">
+                     <p className="text-sm text-foreground/80 mb-4">
+                       We gratefully accept donations of school supplies, uniforms, sanitary wear, and non-perishable food items.
+                     </p>
+                     
+                     <div className="space-y-3">
+                        <div className="flex items-start gap-3">
+                          <MapPin className="w-4 h-4 text-primary mt-1" />
+                          <div>
+                            <p className="text-sm font-semibold">Future Wings Foundation HQ</p>
+                            <p className="text-xs text-muted-foreground">Harare, Zimbabwe</p>
+                            <p className="text-xs text-muted-foreground mt-1">(Please contact us for exact directions)</p>
+                          </div>
                         </div>
-                        <div className="flex items-center gap-2">
-                           <Mail className="w-4 h-4 text-primary" />
-                           <span>alisa@futurewingsfoundation.com</span>
+
+                        <div className="flex items-center gap-3">
+                          <Phone className="w-4 h-4 text-primary" />
+                          <p className="text-sm">+263 788 863 452</p>
                         </div>
-                      </div>
-                   </div>
+                     </div>
+                  </div>
+
+                  <Button variant="outline" className="w-full" onClick={() => window.location.href = "mailto:alisa@futurewingsfoundation.com"}>
+                    <Mail className="w-4 h-4 mr-2" />
+                    Email to Schedule Drop-off
+                  </Button>
                 </CardContent>
               </Card>
             </TabsContent>

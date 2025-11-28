@@ -31,6 +31,7 @@ This file contains the directory structure and the contents of important project
 │   │   ├── vite-env.d.ts
 │   │   ├── **assets/**
 │   │   │   ├── IMG_6901.HEIC
+│   │   │   ├── **New folder/**
 │   │   ├── **components/**
 │   │   │   ├── AdminControls.tsx
 │   │   │   ├── ChangeSection.tsx
@@ -1484,9 +1485,15 @@ export default AdminControls;
 ```tsx
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import classroomImage from "@/assets/classroom-scene.jpg";
-import heroChildrenImage from "@/assets/hero-children.jpg";
-import heroEducationImage from "@/assets/hero-education.jpg";
+// Importing the new diverse images
+import dist1 from "@/assets/dist1.jpg";
+import dist2 from "@/assets/dist2.jpg";
+import dist3 from "@/assets/dist3.jpg";
+import dist4 from "@/assets/dist4.jpg";
+import dist5 from "@/assets/dist5.jpg";
+import dist6 from "@/assets/dist6.jpg";
+import dist7 from "@/assets/dist7.jpg";
+import dist8 from "@/assets/dist8.jpg";
 import ContentEditor from "@/components/ContentEditor";
 import { useContentEditor } from "@/hooks/useContentEditor";
 
@@ -1494,21 +1501,17 @@ const ChangeSection = () => {
   const { content } = useContentEditor('change_section');
   const [shuffledImages, setShuffledImages] = useState<string[]>([]);
 
-  // Available images for the collage
-  const images = [
-    classroomImage,
-    heroChildrenImage,
-    heroEducationImage,
-    classroomImage,
-    heroChildrenImage,
-    heroEducationImage,
+  // Pool of 8 available images
+  const sourceImages = [
+    dist1, dist2, dist3, dist4, 
+    dist5, dist6, dist7, dist8
   ];
 
   // Shuffle images on mount and periodically
   useEffect(() => {
     const shuffle = () => {
-      const shuffled = [...images].sort(() => Math.random() - 0.5);
-      setShuffledImages(shuffled);
+      const shuffled = [...sourceImages].sort(() => Math.random() - 0.5);
+      setShuffledImages(shuffled.slice(0, 6));
     };
 
     shuffle();
@@ -1517,6 +1520,14 @@ const ChangeSection = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Function to handle the scroll
+  const handleMoreAboutUs = () => {
+    const teamSection = document.getElementById('team');
+    if (teamSection) {
+      teamSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <ContentEditor sectionKey="change_section" sectionName="Change Section">
       <section className="py-12 sm:py-16 lg:py-20 bg-primary">
@@ -1524,18 +1535,22 @@ const ChangeSection = () => {
           <div className="grid lg:grid-cols-2 gap-8 sm:gap-10 lg:gap-12 items-center">
             {/* Left content */}
             <div className="text-background order-2 lg:order-1">
-              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 sm:mb-6 leading-tight">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 leading-tight">
                 {content?.title || 'Who We Are'}
               </h2>
-              <p className="text-base sm:text-lg mb-3 sm:mb-4 opacity-90">
+              
+              <p className="text-base sm:text-lg leading-relaxed opacity-90 mb-4">
                 {content?.description || 'Future Wings Foundation is a Zimbabwean non-profit organisation working at the intersection of education access, student dignity, and community empowerment.'}
               </p>
-              <p className="text-sm sm:text-base mb-6 sm:mb-8 opacity-80 leading-relaxed">
+              
+              <p className="text-base sm:text-lg leading-relaxed opacity-90 mb-8">
                 {content?.subdescription || 'We work in peri-urban public schools to deliver low-cost, high-impact interventions that help students thrive not just survive in school. We believe that dignity, not just resources, is the barrier no one is addressing.'}
               </p>
+
               <Button
                 variant="rounded"
-                className="text-background w-full sm:w-auto"
+                onClick={handleMoreAboutUs}
+                className="text-background w-full sm:w-auto font-semibold border-background hover:bg-background hover:text-primary"
               >
                 {content?.buttonText || 'MORE ABOUT US'}
               </Button>
@@ -1547,23 +1562,22 @@ const ChangeSection = () => {
                 {shuffledImages.length > 0 ? (
                   shuffledImages.map((image, index) => (
                     <div
-                      key={`${image}-${index}`}
-                      className="relative aspect-square overflow-hidden rounded-lg group cursor-pointer"
+                      key={`img-${index}`}
+                      className="relative aspect-square overflow-hidden rounded-lg group"
                       style={{
                         animation: `fadeIn 0.6s ease-out ${index * 0.1}s both`,
                       }}
                     >
                       <img
                         src={image}
-                        alt={`Gallery image ${index + 1}`}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        alt={`Community image ${index + 1}`}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-background/0 group-hover:bg-background/10 transition-colors duration-300"></div>
                     </div>
                   ))
                 ) : (
-                  // Loading placeholder
-                  images.map((_, index) => (
+                  Array(6).fill(0).map((_, index) => (
                     <div
                       key={index}
                       className="aspect-square bg-background/20 rounded-lg animate-pulse"
@@ -1572,9 +1586,8 @@ const ChangeSection = () => {
                 )}
               </div>
 
-              {/* Optional: Add a subtle overlay pattern */}
-              <div className="absolute inset-0 pointer-events-none opacity-0 hover:opacity-100 transition-opacity duration-300">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent rounded-lg"></div>
+              <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute -inset-4 border border-background/5 rounded-xl z-[-1]"></div>
               </div>
             </div>
           </div>
@@ -1585,11 +1598,11 @@ const ChangeSection = () => {
         @keyframes fadeIn {
           from {
             opacity: 0;
-            transform: scale(0.9) translateY(10px);
+            transform: scale(0.95);
           }
           to {
             opacity: 1;
-            transform: scale(1) translateY(0);
+            transform: scale(1);
           }
         }
       `}</style>
@@ -1910,29 +1923,98 @@ export default EditingIndicator;
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { MapPin, Phone, Mail } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const Footer = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  const scrollToSection = (sectionId: string) => {
+    // If we are not on the home page, navigate to home first
+    if (location.pathname !== '/') {
+      navigate('/');
+      // Add a small delay to allow the navigation to complete before scrolling
+      setTimeout(() => {
+        const element = document.getElementById(sectionId);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+      return;
+    }
+
+    // If we are already on home, just scroll
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleUnderDevelopment = (e: React.MouseEvent) => {
+    e.preventDefault();
+    toast({
+      title: "Coming Soon",
+      description: "This section is currently under development. Please check back later!",
+    });
+  };
+
   return (
-    <footer className="bg-foreground text-background">
+    <footer className="bg-foreground text-background" id="contact">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {/* Quick Links */}
           <div className="sm:col-span-1">
             <h3 className="text-base sm:text-lg font-semibold mb-4">Quick Links</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">Home</a></li>
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">About Us</a></li>
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">Our Impact</a></li>
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">Contact Us</a></li>
+            <ul className="space-y-2 flex flex-col items-start">
+              <li>
+                <button 
+                  onClick={() => scrollToSection('hero')} 
+                  className="text-sm sm:text-base hover:text-primary transition-colors text-left"
+                >
+                  Home
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('about')} 
+                  className="text-sm sm:text-base hover:text-primary transition-colors text-left"
+                >
+                  About Us
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={() => scrollToSection('impact')} 
+                  className="text-sm sm:text-base hover:text-primary transition-colors text-left"
+                >
+                  Our Impact
+                </button>
+              </li>
             </ul>
           </div>
 
-          {/* Other Pages */}
+          {/* Other Pages - Now functional with "Under Development" toast */}
           <div className="sm:col-span-1">
             <h3 className="text-base sm:text-lg font-semibold mb-4">Other Pages</h3>
-            <ul className="space-y-2">
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">Impact Reports</a></li>
-              <li><a href="#" className="text-sm sm:text-base hover:text-primary transition-colors">Annual Reports</a></li>
+            <ul className="space-y-2 flex flex-col items-start">
+              <li>
+                <button 
+                  onClick={handleUnderDevelopment}
+                  className="text-sm sm:text-base hover:text-primary transition-colors text-left"
+                >
+                  Impact Reports
+                </button>
+              </li>
+              <li>
+                <button 
+                  onClick={handleUnderDevelopment}
+                  className="text-sm sm:text-base hover:text-primary transition-colors text-left"
+                >
+                  Annual Reports
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -1998,7 +2080,6 @@ const Footer = () => {
 };
 
 export default Footer;
-
 ```
 
 ### File: `src\components\Header.tsx`
@@ -2012,6 +2093,13 @@ import { Link, useLocation } from "react-router-dom";
 const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+
+  // Social Media Links
+  const socialLinks = {
+    facebook: "https://www.facebook.com/share/1GDaqifroE/",
+    instagram: "https://www.instagram.com/futurewingsfoundation?igsh=cWo0d3VpdmNuejF0",
+    linkedin: "https://www.linkedin.com/company/future-wings-foundation/"
+  };
 
   const scrollToSection = (sectionId: string) => {
     setIsMobileMenuOpen(false);
@@ -2054,9 +2142,30 @@ const Header = () => {
               <span>+263 788863452</span>
             </div>
             <div className="flex items-center space-x-2">
-              <Facebook className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
-              <Instagram className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
-              <Linkedin className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
+              <a 
+                href={socialLinks.facebook} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Visit us on Facebook"
+              >
+                <Facebook className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
+              </a>
+              <a 
+                href={socialLinks.instagram} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Visit us on Instagram"
+              >
+                <Instagram className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
+              </a>
+              <a 
+                href={socialLinks.linkedin} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Visit us on LinkedIn"
+              >
+                <Linkedin className="w-4 h-4 hover:text-primary transition-colors cursor-pointer" />
+              </a>
             </div>
           </div>
         </div>
@@ -2148,9 +2257,30 @@ const Header = () => {
               
               {/* Mobile Social Links */}
               <div className="flex items-center justify-center space-x-4 pt-4 border-t">
-                <Facebook className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
-                <Instagram className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
-                <Linkedin className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
+                <a 
+                  href={socialLinks.facebook} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Visit us on Facebook"
+                >
+                  <Facebook className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
+                </a>
+                <a 
+                  href={socialLinks.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Visit us on Instagram"
+                >
+                  <Instagram className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
+                </a>
+                <a 
+                  href={socialLinks.linkedin} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  aria-label="Visit us on LinkedIn"
+                >
+                  <Linkedin className="w-5 h-5 text-foreground hover:text-primary transition-colors cursor-pointer" />
+                </a>
               </div>
 
               {/* Mobile Contact Info */}
@@ -2438,7 +2568,7 @@ const ImpactSectionContent = () => {
         </div>
 
         {/* What We Have Learnt - Full Width */}
-        <div className="mb-12 lg:mb-16">
+        <div className="mb-16 lg:mb-20">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-start gap-4 mb-6">
               <div className="flex-shrink-0 w-12 h-12 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -2458,43 +2588,8 @@ const ImpactSectionContent = () => {
           </div>
         </div>
 
-        {/* Our Reach So Far - Full Width (Last) */}
+        {/* Three Pillars - MOVED UP */}
         <div className="mb-16 lg:mb-20">
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-gradient-to-br from-primary to-primary/90 rounded-2xl p-8 sm:p-12 text-background shadow-xl">
-              <div className="text-center mb-10">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-background/20 rounded-full mb-4">
-                  <Award className="w-8 h-8" />
-                </div>
-                <h3 className="text-2xl sm:text-3xl font-bold mb-2">
-                  Our Reach So Far
-                </h3>
-                <div className="w-16 h-0.5 bg-background/60 mx-auto"></div>
-              </div>
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-                <div className="text-center">
-                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.studentsSupported || "718"}</div>
-                  <div className="text-sm sm:text-base opacity-90">Students directly supported in 2025</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.sanitaryPads || "5,500+"}</div>
-                  <div className="text-sm sm:text-base opacity-90">Sanitary pads distributed</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.winterJerseys || "40+"}</div>
-                  <div className="text-sm sm:text-base opacity-90">Winter jerseys provided</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.schoolsRenovated || "1"}</div>
-                  <div className="text-sm sm:text-base opacity-90">School renovated</div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Three Pillars - Centered with reduced width */}
-        <div className="mb-16">
           <div className="text-center mb-12">
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-foreground">
               What We're Doing <span className="text-primary">Now</span>
@@ -2549,6 +2644,41 @@ const ImpactSectionContent = () => {
           </div>
         </div>
 
+        {/* Our Reach So Far - MOVED DOWN (After Pillars) */}
+        <div className="mb-16 lg:mb-20">
+          <div className="max-w-5xl mx-auto">
+            <div className="bg-gradient-to-br from-primary to-primary/90 rounded-2xl p-8 sm:p-12 text-background shadow-xl">
+              <div className="text-center mb-10">
+                <div className="inline-flex items-center justify-center w-16 h-16 bg-background/20 rounded-full mb-4">
+                  <Award className="w-8 h-8" />
+                </div>
+                <h3 className="text-2xl sm:text-3xl font-bold mb-2">
+                  Our Reach So Far
+                </h3>
+                <div className="w-16 h-0.5 bg-background/60 mx-auto"></div>
+              </div>
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.studentsSupported || "718"}</div>
+                  <div className="text-sm sm:text-base opacity-90">Students directly supported in 2025</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.sanitaryPads || "5,500+"}</div>
+                  <div className="text-sm sm:text-base opacity-90">Sanitary pads distributed</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.winterJerseys || "40+"}</div>
+                  <div className="text-sm sm:text-base opacity-90">Winter jerseys provided</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl sm:text-5xl font-bold mb-2">{content?.schoolsRenovated || "1"}</div>
+                  <div className="text-sm sm:text-base opacity-90">School renovated</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Call to Action */}
         <div className="text-center">
           <div className="max-w-2xl mx-auto p-8 sm:p-10 border border-border rounded-2xl bg-background">
@@ -2571,7 +2701,7 @@ const ImpactSectionContent = () => {
         </div>
       </div>
 
-      {/* Contact Form Dialog - Simplified */}
+      {/* Contact Form Dialog */}
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
@@ -2703,7 +2833,8 @@ const TeamSection = () => {
   }, []);
 
   const teamMembers = [
-    // Alisa Adams removed from here, moved to boardMembers
+    // Added Alisa Adams here as well (Leadership)
+    { name: "Alisa Adams", role: "Co-Founder & Executive Director", type: "leadership", category: "team", image: Alisa },
     { name: "Alison Hama", role: "Strategic Partnerships Lead", type: "staff", category: "team", image: Alison },
     { name: "Lindisi Doba", role: "Community Engagement Officer", type: "staff", category: "team", image: Lindisi },
     { name: "Prudence Jingura", role: "Social Media & Marketing Intern", type: "staff", category: "team", image: Prudence },
@@ -2715,13 +2846,10 @@ const TeamSection = () => {
   ];
 
   const boardMembers = [
-    // 1. Alisa Adams (Co-founder) - NEW PRIMARY MEMBER
+    // Alisa Adams is also here as Board Director
     { name: "Alisa Adams", role: "Co-Founder & Board Director", type: "leadership", category: "board", image: Alisa },
-    // 2. Nicole Gwindi - Moved to second position
     { name: "Nicole Gwindi", role: "Board Member", type: "board", category: "board", image: Nicole },
-    // 3. Francis Rwodzi / Jafter - Updated name and moved to third position
     { name: "Francis Rwodzi", role: "Board Member", type: "board", category: "board", image: Francis },
-    // Remaining members follow
     { name: "Zinzile Mlambo", role: "Board Member", type: "board", category: "board", image: Zinzile },
     { name: "Leroy Margolis", role: "Board Member", type: "board", category: "board", image: Leroy },
     { name: "Tafadzwa Munatsi", role: "Board Member", type: "board", category: "board", image: Tafadzwa },
@@ -2730,7 +2858,6 @@ const TeamSection = () => {
 
   // Determine which members to display
   const displayedTeamMembers = showAllTeam ? teamMembers : teamMembers.slice(0, 6);
-  // Reverted to slice(0, 3) to show only 3 by default
   const displayedBoardMembers = showAllBoard ? boardMembers : boardMembers.slice(0, 3); 
 
   const handleToggleTeam = () => {
@@ -2749,7 +2876,7 @@ const TeamSection = () => {
 
   const MemberCard = ({ member, index }: { member: any; index: number }) => (
     <motion.div
-      key={member.name}
+      key={`${member.name}-${member.category}`}
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 30 }}
@@ -2823,14 +2950,12 @@ const TeamSection = () => {
             </p>
           </div>
 
-          {/* BOARD MEMBERS SECTION - MOVED TO THE TOP */}
+          {/* BOARD MEMBERS SECTION */}
           <div className="relative mb-16">
-            {/* Decorative background for board section */}
             <div className="absolute inset-0 bg-gradient-to-br from-accent/5 via-accent/10 to-primary/5 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8"></div>
             <div className="absolute inset-0 border-2 border-accent/20 rounded-3xl -mx-4 sm:-mx-6 lg:-mx-8"></div>
 
             <div className="relative pt-12 sm:pt-16 pb-12 sm:pb-16 px-4 sm:px-6 lg:px-8">
-              {/* Section Header */}
               <div className="mb-6 sm:mb-8">
                 <h3 className="text-2xl sm:text-3xl font-bold text-foreground">
                   Board of Directors
@@ -2840,12 +2965,11 @@ const TeamSection = () => {
                 </p>
               </div>
 
-              {/* Board Members Grid */}
               <div className="grid gap-8 mb-8 sm:mb-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                 <AnimatePresence>
                   {displayedBoardMembers.map((member, index) => (
                     <motion.div
-                      key={member.name}
+                      key={`${member.name}-board`}
                       initial={{ opacity: 0, y: 30 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, y: 30 }}
@@ -2908,15 +3032,13 @@ const TeamSection = () => {
                       <>View All Board Members</>
                     )}
                   </Button>
-
-                  {/* REMOVED: Count display paragraph */}
                 </div>
               )}
             </div>
           </div>
 
 
-          {/* TEAM MEMBERS SECTION - MOVED TO THE BOTTOM */}
+          {/* TEAM MEMBERS SECTION */}
           <div className="mb-16">
             <h3 className="text-2xl sm:text-3xl font-bold text-foreground mb-6 sm:mb-8">
               Our Team
@@ -2924,7 +3046,7 @@ const TeamSection = () => {
             <div className="grid gap-8 mb-8 sm:mb-12 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
               <AnimatePresence>
                 {displayedTeamMembers.map((member, index) => (
-                  <MemberCard key={member.name} member={member} index={index} />
+                  <MemberCard key={`${member.name}-team`} member={member} index={index} />
                 ))}
               </AnimatePresence>
             </div>
@@ -2941,8 +3063,6 @@ const TeamSection = () => {
                     <>View All Team Members</>
                   )}
                 </Button>
-
-                {/* REMOVED: Count display paragraph */}
               </div>
             )}
           </div>
@@ -8435,7 +8555,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Check, CreditCard, Building2, Smartphone, Heart, Info, Mail } from "lucide-react";
+import { Copy, Check, CreditCard, Building2, Smartphone, Heart, Info, Mail, MapPin, Phone } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
@@ -8444,10 +8564,10 @@ const Donate = () => {
   const [donationAmount, setDonationAmount] = useState("");
   const [selectedTab, setSelectedTab] = useState("international");
   
-  // NEW STATE: To track the inner banking tab (Local/International)
+  // State for the inner banking tab (Local/International)
   const [selectedBankType, setSelectedBankType] = useState("local"); 
 
-  // UPDATED BANKING DATA STRUCTURE
+  // BANKING DATA
   const banks = [
     {
       name: "Nedbank Zimbabwe",
@@ -8473,13 +8593,17 @@ const Donate = () => {
     },
   ];
 
-  // FIND CURRENTLY SELECTED BANK DETAILS
   const selectedBank = banks.find(bank => bank.type === selectedBankType) || banks[0];
 
-  const ecocashNumber = "+263 788 123 456"; // Retaining for copyToClipboard placeholder but not used in layout
+  // Shared details for WorldRemit & EcoCash
+  const mobileMoneyDetails = {
+    recipientName: "Alisa Adams",
+    number: "+263 788 863 452",
+    localNumber: "0788 863 452"
+  };
+
   const quickAmounts = [25, 50, 100, 250, 500, 1000];
 
-  // Ensure copyToClipboard index is unique across all dynamic fields (using 1, 2, 3, 4)
   const copyToClipboard = (text: string, index: number) => {
     navigator.clipboard.writeText(text);
     setCopiedIndex(index);
@@ -8487,7 +8611,7 @@ const Donate = () => {
   };
 
   const handlePayPalDonate = () => {
-    // Replace with your actual PayPal donation link
+    // Replace with actual PayPal donation link
     const paypalUrl = `https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID&amount=${donationAmount || 0}`;
     window.open(paypalUrl, "_blank");
   };
@@ -8524,26 +8648,26 @@ const Donate = () => {
           </div>
 
           <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-4 mb-6">
-              <TabsTrigger value="international" className="text-sm">
+            <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 mb-6 h-auto">
+              <TabsTrigger value="international" className="text-sm py-3">
                 <CreditCard className="w-4 h-4 mr-2" />
-                International Payments
+                International
               </TabsTrigger>
-              <TabsTrigger value="bank" className="text-sm">
+              <TabsTrigger value="bank" className="text-sm py-3">
                 <Building2 className="w-4 h-4 mr-2" />
-                Bank Transfers
+                Bank Transfer
               </TabsTrigger>
-              <TabsTrigger value="worldremit" className="text-sm">
+              <TabsTrigger value="remit" className="text-sm py-3">
                 <Smartphone className="w-4 h-4 mr-2" />
-                WorldRemit
+                WorldRemit / EcoCash
               </TabsTrigger>
-              <TabsTrigger value="cash" className="text-sm">
+              <TabsTrigger value="cash" className="text-sm py-3">
                 <Heart className="w-4 h-4 mr-2" />
-                Cash
+                Drop-off / Cash
               </TabsTrigger>
             </TabsList>
 
-            {/* International Payments Tab (formerly PayPal) */}
+            {/* 1. International Payments Tab (PayPal) */}
             <TabsContent value="international" className="space-y-4">
               <Card>
                 <CardHeader>
@@ -8569,7 +8693,6 @@ const Donate = () => {
                       className="h-10"
                     />
 
-                    {/* Quick Amount Buttons */}
                     <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-3">
                       {quickAmounts.map((amount) => (
                         <Button
@@ -8592,7 +8715,7 @@ const Donate = () => {
                     <div className="flex items-start gap-2">
                       <Info className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
                       <p className="text-xs text-foreground/80">
-                        You'll be redirected to PayPal's secure payment page. All major credit cards, debit cards, and PayPal accounts accepted.
+                        You'll be redirected to PayPal's secure payment page.
                       </p>
                     </div>
                   </div>
@@ -8610,7 +8733,7 @@ const Donate = () => {
               </Card>
             </TabsContent>
 
-            {/* Bank Transfers Tab - MAJOR MODIFICATION */}
+            {/* 2. Bank Transfers Tab */}
             <TabsContent value="bank" className="space-y-4">
               <Card>
                 <CardHeader>
@@ -8619,35 +8742,28 @@ const Donate = () => {
                     Bank Transfer Details
                   </CardTitle>
                   <CardDescription className="text-sm text-foreground/70">
-                    Transfer funds directly to our account. Select whether your transfer is local (Zimbabwean) or international.
+                    Direct transfer. Select local or international.
                   </CardDescription>
                 </CardHeader>
               </Card>
 
-              {/* Inner Tab for Local/International */}
               <Tabs value={selectedBankType} onValueChange={setSelectedBankType}>
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="local" className="text-sm">
-                    Local (Nedbank Zimbabwe)
+                    Local (Nedbank)
                   </TabsTrigger>
                   <TabsTrigger value="international" className="text-sm">
-                    International (ING Netherlands)
+                    International (ING)
                   </TabsTrigger>
                 </TabsList>
 
                 <TabsContent value={selectedBankType} className="space-y-4 pt-4">
-                  
                   <h3 className="text-xl font-bold text-foreground">{selectedBank.name}</h3>
 
-                  {/* Dynamic Bank Details Card */}
                   <Card className="border">
-                    <CardHeader className="pb-3">
-                      <CardTitle className="text-base">Account Information</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-3">
-                      
-                      {/* Account Name - MODIFIED LAYOUT */}
-                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                    <CardContent className="space-y-0 p-0">
+                      {/* Account Name */}
+                      <div className="flex justify-between items-center p-4 border-b border-border/50">
                         <Label className="text-xs font-semibold text-foreground/70">Account Name</Label>
                         <div className="flex items-center gap-2">
                           <p className="text-sm font-medium text-foreground">{selectedBank.accountName}</p>
@@ -8657,17 +8773,13 @@ const Donate = () => {
                             className="h-7 w-7"
                             onClick={() => copyToClipboard(selectedBank.accountName, 1)}
                           >
-                            {copiedIndex === 1 ? (
-                              <Check className="w-3.5 h-3.5 text-primary" />
-                            ) : (
-                              <Copy className="w-3.5 h-3.5" />
-                            )}
+                            {copiedIndex === 1 ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
                           </Button>
                         </div>
                       </div>
 
-                      {/* Account Number / IBAN - MODIFIED LAYOUT */}
-                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                      {/* Account Number */}
+                      <div className="flex justify-between items-center p-4 border-b border-border/50">
                         <Label className="text-xs font-semibold text-foreground/70">{selectedBank.accountNumberLabel}</Label>
                         <div className="flex items-center gap-2">
                           <p className="text-sm font-mono font-medium text-foreground">{selectedBank.accountNumber}</p>
@@ -8677,25 +8789,13 @@ const Donate = () => {
                             className="h-7 w-7"
                             onClick={() => copyToClipboard(selectedBank.accountNumber, 2)}
                           >
-                            {copiedIndex === 2 ? (
-                              <Check className="w-3.5 h-3.5 text-primary" />
-                            ) : (
-                              <Copy className="w-3.5 h-3.5" />
-                            )}
+                            {copiedIndex === 2 ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
                           </Button>
                         </div>
                       </div>
 
-                      {/* Bank / Branch Name - MODIFIED LAYOUT */}
-                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
-                        <Label className="text-xs font-semibold text-foreground/70">Bank Name / Branch</Label>
-                        <div className="p-0">
-                          <p className="text-sm font-medium text-foreground">{selectedBank.branch}</p>
-                        </div>
-                      </div>
-
-                      {/* SWIFT Code - MODIFIED LAYOUT */}
-                      <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                      {/* SWIFT */}
+                      <div className="flex justify-between items-center p-4 border-b border-border/50">
                         <Label className="text-xs font-semibold text-foreground/70">SWIFT Code</Label>
                         <div className="flex items-center gap-2">
                           <p className="text-sm font-mono font-medium text-foreground">{selectedBank.swiftCode}</p>
@@ -8705,18 +8805,14 @@ const Donate = () => {
                             className="h-7 w-7"
                             onClick={() => copyToClipboard(selectedBank.swiftCode, 3)}
                           >
-                            {copiedIndex === 3 ? (
-                              <Check className="w-3.5 h-3.5 text-primary" />
-                            ) : (
-                              <Copy className="w-3.5 h-3.5" />
-                            )}
+                            {copiedIndex === 3 ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
                           </Button>
                         </div>
                       </div>
                       
-                      {/* BIC Code (Conditional) - MODIFIED LAYOUT */}
+                      {/* BIC (If exists) */}
                       {selectedBank.bic && (
-                        <div className="flex justify-between items-center py-2 border-b border-border/50 last:border-b-0">
+                        <div className="flex justify-between items-center p-4">
                           <Label className="text-xs font-semibold text-foreground/70">BIC Code</Label>
                           <div className="flex items-center gap-2">
                             <p className="text-sm font-mono font-medium text-foreground">{selectedBank.bic}</p>
@@ -8726,29 +8822,57 @@ const Donate = () => {
                               className="h-7 w-7"
                               onClick={() => copyToClipboard(selectedBank.bic, 4)}
                             >
-                              {copiedIndex === 4 ? (
-                                <Check className="w-3.5 h-3.5 text-primary" />
-                              ) : (
-                                <Copy className="w-3.5 h-3.5" />
-                              )}
+                              {copiedIndex === 4 ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
                             </Button>
                           </div>
                         </div>
                       )}
-
                     </CardContent>
                   </Card>
                   
-                  {/* General Note */}
-                  <Card className="bg-muted/30 border">
-                    <CardContent className="p-4">
-                      <div className="flex items-start gap-2">
-                        <Info className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                        <p className="text-xs text-foreground">
-                          {selectedBank.notes}
-                        </p>
+                  <div className="flex items-center gap-2 text-xs text-muted-foreground px-1">
+                    <Info className="w-3 h-3" />
+                    <p>{selectedBank.notes}</p>
+                  </div>
+                </TabsContent>
+              </Tabs>
+            </TabsContent>
+
+            {/* 3. WorldRemit & EcoCash Tab - COMBINED */}
+            <TabsContent value="remit" className="space-y-4">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <Smartphone className="w-4 h-4 text-primary" />
+                    WorldRemit & EcoCash
+                  </CardTitle>
+                  <CardDescription className="text-sm text-foreground/70">
+                    Send money via WorldRemit or locally using EcoCash. Both use the same recipient details.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  
+                  {/* Recipient Details Card */}
+                  <div className="bg-primary/5 border border-primary/10 rounded-lg p-4">
+                    <h4 className="text-sm font-bold text-primary mb-3 uppercase tracking-wide">Recipient Details</h4>
+                    <div className="grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <Label className="text-xs text-muted-foreground">Recipient Name</Label>
+                        <div className="flex items-center gap-2">
+                          <p className="text-base font-medium">{mobileMoneyDetails.recipientName}</p>
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6"
+                            onClick={() => copyToClipboard(mobileMoneyDetails.recipientName, 10)}
+                          >
+                             {copiedIndex === 10 ? <Check className="w-3 h-3 text-primary" /> : <Copy className="w-3 h-3" />}
+                          </Button>
+                        </div>
                       </div>
-                    </CardConten
+                      <div>
+                        <Label className="text-xs text-muted-foreground">Mobile Number</Label>
+            
 
 ... [Content truncated at 15000 characters] ...
 ```

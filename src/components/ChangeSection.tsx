@@ -22,18 +22,30 @@ const ChangeSection = () => {
     dist5, dist6, dist7, dist8
   ];
 
+  // Fisher-Yates Shuffle Algorithm (Unbiased)
+  const shuffleArray = (array: string[]) => {
+    const newArr = [...array];
+    for (let i = newArr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [newArr[i], newArr[j]] = [newArr[j], newArr[i]];
+    }
+    return newArr;
+  };
+
   // Shuffle images on mount and periodically
   useEffect(() => {
-    const shuffle = () => {
-      const shuffled = [...sourceImages].sort(() => Math.random() - 0.5);
+    const updateImages = () => {
+      // 1. Shuffle the full source array
+      const shuffled = shuffleArray(sourceImages);
+      // 2. Take the first 6
       setShuffledImages(shuffled.slice(0, 6));
     };
 
-    shuffle();
-    const interval = setInterval(shuffle, 4000); // Shuffle every 4 seconds
+    updateImages();
+    const interval = setInterval(updateImages, 4000); // Shuffle every 4 seconds
 
     return () => clearInterval(interval);
-  }, []);
+  }, []); // Empty dependency array is fine here as sourceImages is constant
 
   // Function to handle the scroll
   const handleMoreAboutUs = () => {
@@ -77,7 +89,8 @@ const ChangeSection = () => {
                 {shuffledImages.length > 0 ? (
                   shuffledImages.map((image, index) => (
                     <div
-                      key={`img-${index}`}
+                      // Using image string in key forces React to treat it as a new element when image changes, preventing stale visuals
+                      key={`${image}-${index}`} 
                       className="relative aspect-square overflow-hidden rounded-lg group"
                       style={{
                         animation: `fadeIn 0.6s ease-out ${index * 0.1}s both`,
