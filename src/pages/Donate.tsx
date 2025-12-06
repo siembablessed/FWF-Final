@@ -2,16 +2,13 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-// Added MapPin, Phone, Mail to the imports below
-import { Copy, Check, CreditCard, Building2, Smartphone, Heart, Info, MapPin, Phone, Mail } from "lucide-react";
+import { Copy, Check, CreditCard, Building2, Smartphone, Heart, Info, MapPin, Phone, Mail, ExternalLink } from "lucide-react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
 const Donate = () => {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
-  const [donationAmount, setDonationAmount] = useState("");
   const [selectedTab, setSelectedTab] = useState("international");
   
   // State for the inner banking tab (Local/International)
@@ -52,8 +49,6 @@ const Donate = () => {
     localNumber: "0788 863 452"
   };
 
-  const quickAmounts = [25, 50, 100, 250, 500, 1000];
-
   const copyToClipboard = (text: string, index: number) => {
     navigator.clipboard.writeText(text);
     setCopiedIndex(index);
@@ -61,7 +56,7 @@ const Donate = () => {
   };
 
   const handlePayPalDonate = () => {
-    // Updated donation link to PanxPan project page
+    // Donation link to PanxPan project page
     const donationUrl = "https://www.panxpan.com/projects/pack-dignity-unlock-potential";
     window.open(donationUrl, "_blank");
   };
@@ -117,7 +112,7 @@ const Donate = () => {
               </TabsTrigger>
             </TabsList>
 
-            {/* 1. International Payments Tab (PayPal/Card via PanxPan) */}
+            {/* 1. International Payments Tab (PanxPan) */}
             <TabsContent value="international" className="space-y-4">
               <Card>
                 <CardHeader>
@@ -129,55 +124,26 @@ const Donate = () => {
                     Secure payment via PanxPan. All major cards accepted.
                   </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
-                  <div className="space-y-2">
-                    <Label htmlFor="amount" className="text-sm">Donation Amount (USD)</Label>
-                    <Input
-                      id="amount"
-                      type="number"
-                      placeholder="Enter amount"
-                      value={donationAmount}
-                      onChange={(e) => setDonationAmount(e.target.value)}
-                      min="1"
-                      step="0.01"
-                      className="h-10"
-                    />
-
-                    <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 mt-3">
-                      {quickAmounts.map((amount) => (
-                        <Button
-                          key={amount}
-                          variant="outline"
-                          size="sm"
-                          onClick={() => setDonationAmount(amount.toString())}
-                          className={`text-xs h-8 ${donationAmount === amount.toString()
-                              ? "bg-primary text-primary-foreground border-primary"
-                              : ""
-                            }`}
-                        >
-                          ${amount}
-                        </Button>
-                      ))}
+                <CardContent className="space-y-6">
+                  <div className="bg-muted/30 p-4 rounded-lg border border-border/50 flex flex-col items-center text-center space-y-2">
+                    <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-2">
+                      <ExternalLink className="w-5 h-5 text-primary" />
                     </div>
-                  </div>
-
-                  <div className="bg-muted/50 p-3 rounded-md border border-border">
-                    <div className="flex items-start gap-2">
-                      <Info className="w-4 h-4 text-primary mt-0.5 flex-shrink-0" />
-                      <p className="text-xs text-foreground/80">
-                        You'll be redirected to our secure project page to complete the donation.
-                      </p>
-                    </div>
+                    <p className="text-sm font-medium">
+                      You will be redirected to our secure project page on PanxPan.
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      You can select your donation amount and currency securely on their platform.
+                    </p>
                   </div>
 
                   <Button
                     onClick={handlePayPalDonate}
-                    className="w-full"
+                    className="w-full h-12 text-base"
                     variant="rounded"
-                    disabled={!donationAmount || parseFloat(donationAmount) <= 0}
                   >
                     <CreditCard className="w-4 h-4 mr-2" />
-                    Donate ${donationAmount || "0"}
+                    Proceed to Donate
                   </Button>
                 </CardContent>
               </Card>
